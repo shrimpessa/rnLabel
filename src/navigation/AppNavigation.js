@@ -6,9 +6,13 @@ import { PostScreen } from '../screens/PostScreen';
 
 const PostNavigator = createStackNavigator(
     {
-        Main: MainScreen,
+        Main: {
+            screen: MainScreen,
+            navigationOptions: () => ({title: 'Мой блог'})
+        },
         Post: {
-            screen: PostScreen
+            screen: PostScreen,
+            navigationOptions: () => ({title: 'Пост номер 42'})
         }
     },
     {
