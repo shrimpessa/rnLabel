@@ -4,8 +4,11 @@ import {
     View, 
     FlatList
 } from 'react-native';
+import { HeaderButtons, Item } from 'react-navigation-header-buttons'
+
 import { DATA } from '../data';
 import { Post } from '../components/Post';
+import { AppHeaderIcon } from '../components/ui/AppHeaderIcon';
 
 export const MainScreen = ({ navigation }) => {
 
@@ -23,6 +26,19 @@ export const MainScreen = ({ navigation }) => {
         </View>
     )
 }
+
+MainScreen.navigationOptions = {
+    headerTitle: 'Мой блог',
+    headerRight: (
+      <HeaderButtons HeaderButtonComponent={AppHeaderIcon}>
+        <Item
+          title='Take photo'
+          iconName='ios-camera'
+          onPress={() => console.log('Press photo')}
+        />
+      </HeaderButtons>
+    )
+  }
 
 const styles = StyleSheet.create({
     wrapper: {
