@@ -1,19 +1,45 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
-import { AppText } from '../components/ui/AppText'
+import { HeaderButtons, Item } from 'react-navigation-header-buttons'
+import { DATA } from '../data';
+import { AppHeaderIcon } from '../components/ui/AppHeaderIcon';
+import { PostList } from '../components/PostList';
 
-export const BookedScreen = () => {
+export const BookedScreen = ({ navigation }) => {
+
+    const openPostHandler = post => {
+        navigation.navigate('Post', { 
+            postID: post.id, 
+            date: post.date,
+            booked: post.booked
+        })
+    }
+
     return (
-        <View style={styles.center}>
-            <AppText>BookedScreen</AppText>
-        </View>
+      <PostList 
+        data={DATA.filter(post => post.booked)} 
+        onOpen={openPostHandler} 
+      />
     )
 }
 
-const styles = StyleSheet.create({
-    center: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'        
-    }
-})
+BookedScreen.navigationOptions = {
+    headerTitle: 'Избранное',
+    headerRight: () => (
+      <HeaderButtons HeaderButtonComponent={AppHeaderIcon}>
+        <Item
+          title='Take photo'
+          iconName='ios-camera'
+          onPress={() => console.log('Press photo')}
+        />
+      </HeaderButtons>
+    ),
+    headerLeft: () => (
+      <HeaderButtons HeaderButtonComponent={AppHeaderIcon}>
+        <Item
+          title='Toggle drawer'
+          iconName='ios-menu'
+          onPress={() => console.log('Press photo')}
+        />
+      </HeaderButtons>
+    )
+}

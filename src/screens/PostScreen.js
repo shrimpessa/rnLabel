@@ -1,5 +1,5 @@
 // экран для отдельного поста
-import React, { useEffect } from 'react';
+import React from 'react';
 import { StyleSheet, View, ScrollView, Image, Alert } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons'
 import { AppText } from '../components/ui/AppText'
@@ -12,10 +12,6 @@ export const PostScreen = ({ navigation }) => {
     const postID = navigation.getParam('postID')
 
     const post = DATA.find(p => p.id === postID)
-
-    // useEffect(() => {
-    //     navigation.setParams({ booked: post.booked })
-    // }, [])
 
     const removeHandler = () => {
         Alert.alert(
@@ -53,7 +49,7 @@ PostScreen.navigationOptions = ({ navigation }) => {
 
     const date = navigation.getParam('date')
     const booked = navigation.getParam('booked')
-    const iconName = booked ? 'ios-star' : 'ios-star-outline'
+    const iconName = booked ? 'ios-star' : 'ios-star-outlined'
 
     return {
         headerTitle: 'Пост от ' + new Date(date).toLocaleDateString(),
