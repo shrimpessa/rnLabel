@@ -1,28 +1,31 @@
 import React from 'react';
-import { ProgressViewIOSComponent, StyleSheet, View } from 'react-native';
-import { AppText } from '../components/ui/AppText'
-import { AppButton } from '../components/ui/AppButton'
+import { 
+    StyleSheet, 
+    View, 
+    FlatList
+} from 'react-native';
+import { DATA } from '../data';
+import { Post } from '../components/Post';
 
 export const MainScreen = ({ navigation }) => {
 
-    const goToPost = () => {
-        navigation.navigate('Post')
+    const openPostHandler = post => {
+        navigation.navigate('Post', { postID: post.id, date: post.date })
     }
 
     return (
-        <View style={styles.center}>
-            <AppText>Main screen</AppText>
-            <AppButton onPress={goToPost}>
-                Go to post
-            </AppButton>
+        <View style={styles.wrapper}>
+            <FlatList
+                data={DATA}
+                keyExtractor={post => post.id.toString()}
+                renderItem={({ item }) => <Post post={item} onOpen={openPostHandler} />}
+            />
         </View>
     )
 }
 
 const styles = StyleSheet.create({
-    center: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'        
+    wrapper: {
+        padding: 10      
     }
 })

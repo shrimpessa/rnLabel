@@ -16,12 +16,11 @@ const PostNavigator = createStackNavigator(
         Post: {
             screen: PostScreen,
             navigationOptions: () => ({
-                title: 'Пост номер 42',
+                title: 'Пост',
                 // headerStyle: {
                 //     backgroundColor: APP_COLORS.DARK_SEA_GREEN
                 // }
-            }),
-            
+            }),        
         }
     },
     {
