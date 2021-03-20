@@ -98,17 +98,54 @@ const CreateNavigator = createStackNavigator(
 )
 
 // главный навигатор
-const MainNavigator = createDrawerNavigator({
-    // главное и избранное
-    PostTabs: {
-      screen: BottomNavigator
+const MainNavigator = createDrawerNavigator(
+    {
+        // главное и избранное
+        PostTabs: {
+            screen: BottomNavigator,
+            navigationOptions: {
+                drawerLabel: 'Главная',
+                drawerIcon: (
+                    <Ionicons 
+                        name="ios-home" 
+                        size={24} 
+                        color={APP_COLORS.CYPRUS} 
+                    />
+                )
+            }
+        },
+        Create: {
+            screen: CreateNavigator,
+            navigationOptions: {
+                drawerLabel: 'Создать пост',
+                drawerIcon: (
+                    <Ionicons 
+                        name="ios-add-circle" 
+                        size={24} 
+                        color={APP_COLORS.CYPRUS} 
+                    />
+                )
+            }
+        },
+        About: {
+            screen: AboutNavigator,
+            navigationOptions: {
+                drawerLabel: 'О приложении',
+                drawerIcon: (
+                    <Ionicons 
+                        name="ios-information" 
+                        size={24} 
+                        color={APP_COLORS.CYPRUS} 
+                    />
+                )
+            }
+        }    
     },
-    About: {
-      screen: AboutNavigator
-    },
-    Create: {
-        screen: CreateNavigator
+    {
+        contentOptions: {
+            activeTintColor: APP_COLORS.CYPRUS
+        }
     }
-  })
+)
   
   export const AppNavigation = createAppContainer(MainNavigator)

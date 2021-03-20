@@ -50,7 +50,7 @@ PostScreen.navigationOptions = ({ navigation }) => {
 
     const date = navigation.getParam('date')
     const booked = navigation.getParam('booked')
-    const iconName = booked ? "ios-star" : "ios-star-outline"
+    const iconName = booked ? "ios-bookmark" : "ios-bookmark-outline"
 
     return {
         headerTitle: 'Пост от ' + new Date(date).toLocaleDateString(),
