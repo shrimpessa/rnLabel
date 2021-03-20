@@ -1,18 +1,40 @@
 // экран для отдельного поста
-import React from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { StyleSheet, View, ScrollView, Image, Alert } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons'
 import { AppText } from '../components/ui/AppText'
 import { AppButton } from '../components/ui/AppButton'
-import { DATA } from '../data';
+import { useDispatch, useSelector } from 'react-redux'
+
+import { DATA } from '../data'
 import { APP_COLORS } from '../enums/APP_COLORS';
 import { AppHeaderIcon } from '../components/ui/AppHeaderIcon';
-import { Ionicons } from '@expo/vector-icons';
+import { toogleBooked } from '../store/actions/postActions';
 
 export const PostScreen = ({ navigation }) => {
-    const postID = navigation.getParam('postID')
 
+    const dispatch = useDispatch()
+
+    const postID = navigation.getParam('postID')
     const post = DATA.find(p => p.id === postID)
+    // есть ли в массиве постов тот, с которым мы счс работаем
+    const booked = useSelector(state =>
+        state.post.bookedPosts.some(post => post.id === postID)
+    )
+    // если флаг booked изменится, тогда задаем его как параметр для навигации
+    useEffect(() => {
+        navigation.setParams({ booked })
+    }, [booked])
+
+
+    
+    const toggleHandler = useCallback(() => {
+        dispatch(toogleBooked(postID))
+    }, [dispatch, postID])
+
+    useEffect(() => {
+        navigation.setParams({ toggleHandler })
+    }, [toggleHandler])
 
     const removeHandler = () => {
         Alert.alert(
@@ -47,11 +69,10 @@ export const PostScreen = ({ navigation }) => {
 }
 
 PostScreen.navigationOptions = ({ navigation }) => {
-
     const date = navigation.getParam('date')
     const booked = navigation.getParam('booked')
+    const toggleHandler = navigation.getParam('toggleHandler')
     const iconName = booked ? "ios-bookmark" : "ios-bookmark-outline"
-
     return {
         headerTitle: 'Пост от ' + new Date(date).toLocaleDateString(),
         headerRight: () => (
@@ -59,10 +80,10 @@ PostScreen.navigationOptions = ({ navigation }) => {
               <Item
                 title='Take photo'
                 iconName={iconName}
-                onPress={() => console.log('Press photo')}
+                onPress={toggleHandler}
               />
             </HeaderButtons>
-          ),
+        )
     }
 }
 

@@ -1,13 +1,13 @@
 // все роуты приложения
 import React from 'react';
+import { Platform } from 'react-native';
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
-
-import { Platform } from 'react-native';
+import { createDrawerNavigator } from 'react-navigation-drawer';
 import { Ionicons } from '@expo/vector-icons';
-import { createDrawerNavigator } from 'react-navigation-drawer'
+
 import { APP_COLORS } from '../enums/APP_COLORS';
 import { MainScreen } from '../screens/MainScreen';
 import { PostScreen } from '../screens/PostScreen';
