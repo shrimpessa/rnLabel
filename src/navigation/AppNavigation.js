@@ -83,6 +83,20 @@ const BottomNavigator = Platform.OS === 'android'
         }
     )
 
+const AboutNavigator = createStackNavigator(
+    {
+        About: AboutScreen
+    },
+    navigatorOptions
+)
+
+const CreateNavigator = createStackNavigator(
+    {
+        Create: CreateScreen
+    },
+    navigatorOptions
+)
+
 // главный навигатор
 const MainNavigator = createDrawerNavigator({
     // главное и избранное
@@ -90,10 +104,10 @@ const MainNavigator = createDrawerNavigator({
       screen: BottomNavigator
     },
     About: {
-      screen: AboutScreen
+      screen: AboutNavigator
     },
     Create: {
-        screen: CreateScreen
+        screen: CreateNavigator
     }
   })
   

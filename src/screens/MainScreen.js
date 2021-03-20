@@ -1,5 +1,6 @@
 import React from 'react';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons'
+
 import { DATA } from '../data';
 import { AppHeaderIcon } from '../components/ui/AppHeaderIcon';
 import { PostList } from '../components/PostList';
@@ -29,7 +30,8 @@ MainScreen.navigationOptions = ({ navigation }) => ({
         <Item
           title='Take photo'
           iconName='ios-camera'
-          onPress={() => console.log('Press photo')}
+          // перейти на страницу Create
+          onPress={() => navigation.push('Create')}
         />
       </HeaderButtons>
     ),
