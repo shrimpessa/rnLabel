@@ -6,21 +6,23 @@ import { AppText } from '../components/ui/AppText'
 import { AppButton } from '../components/ui/AppButton'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { DATA } from '../data'
 import { APP_COLORS } from '../enums/APP_COLORS';
 import { AppHeaderIcon } from '../components/ui/AppHeaderIcon';
-import { toogleBooked } from '../store/actions/postActions';
+import { removePost, toogleBooked } from '../store/actions/postActions';
 
 export const PostScreen = ({ navigation }) => {
 
     const dispatch = useDispatch()
-
     const postID = navigation.getParam('postID')
-    const post = DATA.find(p => p.id === postID)
+    const post = useSelector(state => 
+        state.post.allPosts.find(p => p.id === postID)
+    )
+
     // есть ли в массиве постов тот, с которым мы счс работаем
     const booked = useSelector(state =>
         state.post.bookedPosts.some(post => post.id === postID)
     )
+
     // если флаг booked изменится, тогда задаем его как параметр для навигации
     useEffect(() => {
         navigation.setParams({ booked })
@@ -48,11 +50,19 @@ export const PostScreen = ({ navigation }) => {
               {
                 text: "Удалить",                
                 style: "destructive",
-                onPress: () => {},
+                onPress: () => {
+                    navigation.navigate('Main')
+                    dispatch(removePost(postID))
+                },
               },
             ],
             { cancelable: false }
         );
+    }
+
+    // действия при удалении поста
+    if (!post) {
+        return null
     }
 
     return (
