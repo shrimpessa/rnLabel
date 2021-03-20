@@ -7,6 +7,7 @@ import { AppButton } from '../components/ui/AppButton'
 import { DATA } from '../data';
 import { APP_COLORS } from '../enums/APP_COLORS';
 import { AppHeaderIcon } from '../components/ui/AppHeaderIcon';
+import { Ionicons } from '@expo/vector-icons';
 
 export const PostScreen = ({ navigation }) => {
     const postID = navigation.getParam('postID')
@@ -49,7 +50,7 @@ PostScreen.navigationOptions = ({ navigation }) => {
 
     const date = navigation.getParam('date')
     const booked = navigation.getParam('booked')
-    const iconName = booked ? 'ios-star' : 'ios-star-outlined'
+    const iconName = booked ? "ios-star" : "ios-star-outline"
 
     return {
         headerTitle: 'Пост от ' + new Date(date).toLocaleDateString(),

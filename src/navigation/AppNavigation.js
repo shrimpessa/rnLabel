@@ -4,12 +4,15 @@ import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
+
 import { Platform } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-
+import { createDrawerNavigator } from 'react-navigation-drawer'
 import { APP_COLORS } from '../enums/APP_COLORS';
 import { MainScreen } from '../screens/MainScreen';
 import { PostScreen } from '../screens/PostScreen';
+import { AboutScreen } from '../screens/AboutScreen';
+import { CreateScreen } from '../screens/CreateScreen';
 import { BookedScreen } from '../screens/BookedScreen';
 
 const navigatorOptions = {
@@ -80,4 +83,18 @@ const BottomNavigator = Platform.OS === 'android'
         }
     )
 
-export const AppNavigation = createAppContainer(BottomNavigator)
+// главный навигатор
+const MainNavigator = createDrawerNavigator({
+    // главное и избранное
+    PostTabs: {
+      screen: BottomNavigator
+    },
+    About: {
+      screen: AboutScreen
+    },
+    Create: {
+        screen: CreateScreen
+    }
+  })
+  
+  export const AppNavigation = createAppContainer(MainNavigator)
