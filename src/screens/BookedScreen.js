@@ -22,24 +22,15 @@ export const BookedScreen = ({ navigation }) => {
     )
 }
 
-BookedScreen.navigationOptions = {
+BookedScreen.navigationOptions = ({ navigation }) => ({
     headerTitle: 'Избранное',
-    headerRight: () => (
-      <HeaderButtons HeaderButtonComponent={AppHeaderIcon}>
-        <Item
-          title='Take photo'
-          iconName='ios-camera'
-          onPress={() => console.log('Press photo')}
-        />
-      </HeaderButtons>
-    ),
     headerLeft: () => (
       <HeaderButtons HeaderButtonComponent={AppHeaderIcon}>
         <Item
           title='Toggle drawer'
           iconName='ios-menu'
-          onPress={() => console.log('Press photo')}
+          onPress={() => navigation.toggleDrawer()}
         />
       </HeaderButtons>
     )
-}
+})
