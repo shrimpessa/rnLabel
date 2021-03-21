@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { 
   StyleSheet, 
   View, 
   Image, 
   ScrollView, 
   TouchableWithoutFeedback,
-  Keyboard
+  Keyboard,
+  Button
 } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons'
 import { useDispatch } from 'react-redux'
@@ -15,24 +16,30 @@ import { AppText } from '../components/ui/AppText'
 import { AppTextInput } from '../components/ui/AppTextInput'
 import { AppButton } from '../components/ui/AppButton'
 import { addPost } from '../store/actions/postActions';
+import { PhotoPicker } from '../components/PhotoPicker';
+import { APP_COLORS } from '../enums/APP_COLORS';
 
 export const CreateScreen = ({ navigation }) => {
 
   const dispatch = useDispatch()
 
   const [text, useText] = useState('')
-
-  const img = 'https://cdn.lifehacker.ru/wp-content/uploads/2020/03/Corgi_1583857179.jpg'
+  // при изменении не будет рендериться компонент
+  const imgRef = useRef()
 
   const saveHandler = () => {
     const thisPost = {
       date: new Date().toJSON(),
       text: text, // совпадает со стейтом выше
-      img: img,
+      img: imgRef.current,
       booked: false
     }
     dispatch(addPost(thisPost))
     navigation.navigate('Main')
+  }
+
+  const photoPickHandler = uri => {
+    imgRef.current = uri
   }
 
   return (
@@ -47,13 +54,14 @@ export const CreateScreen = ({ navigation }) => {
             onChangeText={useText}
             multiline
           />
-          <Image 
-            style={{ width: '100%', height: 200, marginBottom: 10 }}
-            source={{ uri: img }} 
-          />
-          <AppButton onPress={saveHandler}>
-            Создать пост
-          </AppButton>      
+          <PhotoPicker onPick={photoPickHandler} />
+          <Button 
+            style={{ padding: 10}}
+            title="Создать пост" 
+            color={APP_COLORS.CYPRUS} 
+            onPress={saveHandler}
+            disabled={!text && !imgRef.current}
+          />    
         </View>
       </TouchableWithoutFeedback>
     </ScrollView>
