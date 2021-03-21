@@ -12,7 +12,8 @@ export const AppTextInput = props => (
         placeholderTextColor={props.placeholderTextColor}
         maxLength={props.maxLength}
         autoCorrect={props.autoCorrect}
-        autoCapitalize={props.autoCapitalize}        
+        autoCapitalize={props.autoCapitalize}  
+        multiline  
     >
         {props.children}
     </TextInput>

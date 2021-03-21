@@ -9,7 +9,7 @@ import {
 import { APP_COLORS } from '../../enums/APP_COLORS';
 import { AppText } from './AppText';
 
-export const AppButton = ({ children, onPress, color=APP_COLORS.LIGHT_GREY }) => {
+export const AppButton = ({ children, onPress, color=APP_COLORS.CYPRUS }) => {
 
     const Wrapper = 
         Platform.OS === 'android' ? TouchableNativeFeedback : TouchableOpacity
