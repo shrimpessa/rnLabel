@@ -1,8 +1,19 @@
 import React from 'react'
-import { StyleSheet, View, FlatList } from 'react-native'
+import { StyleSheet, View, FlatList, Text } from 'react-native'
 import { Post } from './Post'
 
 export const PostList = ({ data, onOpen }) => {
+
+    if (!data.length) {
+        return (
+            <View style={styles.wrapper}>
+                <Text>
+                    Записей нет. Добавьте первую!
+                </Text>
+            </View>
+        )
+    }
+
     return (
         <View style={styles.wrapper}>
             <FlatList

@@ -1,4 +1,3 @@
-import { DATA } from "../../data"
 import { 
     ADD_POST, 
     LOAD_POSTS, 
@@ -9,7 +8,7 @@ import {
 export const loadPosts = () => {
     return {
         type: LOAD_POSTS,
-        payload: DATA
+        payload: []
     }
 }
 

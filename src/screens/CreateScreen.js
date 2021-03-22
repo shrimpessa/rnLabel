@@ -60,7 +60,7 @@ export const CreateScreen = ({ navigation }) => {
             title="Создать пост" 
             color={APP_COLORS.CYPRUS} 
             onPress={saveHandler}
-            disabled={!text && !imgRef.current}
+            disabled={!text}
           />    
         </View>
       </TouchableWithoutFeedback>
