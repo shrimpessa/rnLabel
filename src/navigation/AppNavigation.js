@@ -49,7 +49,7 @@ const bottomTabsConfig = {
             tabBarIcon: info => (
                 <Ionicons name='ios-albums' size={25} color={info.tintColor} />
             ),
-            tabBarLabel: 'Все'
+            tabBarLabel: 'Мои бирки'
         }
     },
     Booked: {
@@ -58,7 +58,7 @@ const bottomTabsConfig = {
             tabBarIcon: info => (
                 <Ionicons name='ios-star' size={25} color={info.tintColor} />
             ),
-            tabBarLabel: 'Избранное'
+            tabBarLabel: 'Любимые'
         }
     }
 }
