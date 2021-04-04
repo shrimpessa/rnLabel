@@ -1,11 +1,11 @@
 // экран для отдельного поста
 import React, { useEffect, useCallback } from 'react';
 import { StyleSheet, View, ScrollView, Image, Alert } from 'react-native';
-import { HeaderButtons, Item } from 'react-navigation-header-buttons'
-import { AppText } from '../components/ui/AppText'
-import { AppButton } from '../components/ui/AppButton'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux';
+import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 
+import { AppText } from '../components/ui/AppText';
+import { AppButton } from '../components/ui/AppButton';
 import { APP_COLORS } from '../enums/APP_COLORS';
 import { AppHeaderIcon } from '../components/ui/AppHeaderIcon';
 import { removePost, toogleBooked } from '../store/actions/postActions';
@@ -27,8 +27,6 @@ export const PostScreen = ({ navigation }) => {
     useEffect(() => {
         navigation.setParams({ booked })
     }, [booked])
-
-
     
     const toggleHandler = useCallback(() => {
         dispatch(toogleBooked(post))
@@ -40,8 +38,8 @@ export const PostScreen = ({ navigation }) => {
 
     const removeHandler = () => {
         Alert.alert(
-            "Удаление поста",
-            "Вы точно хотите удалить этот пост?",
+            "Удаление ярлыка",
+            "Вы точно хотите удалить этот ярлык?",
             [
               {
                 text: "Отменить",
@@ -79,12 +77,14 @@ export const PostScreen = ({ navigation }) => {
 }
 
 PostScreen.navigationOptions = ({ navigation }) => {
-    const date = navigation.getParam('date')
+    // const date = navigation.getParam('date')
     const booked = navigation.getParam('booked')
+    const text = navigation.getParam('text')
     const toggleHandler = navigation.getParam('toggleHandler')
     const iconName = booked ? "ios-bookmark" : "ios-bookmark-outline"
     return {
-        headerTitle: 'Пост от ' + new Date(date).toLocaleDateString(),
+        // headerTitle: 'Пост от ' + new Date(date).toLocaleDateString(),
+        headerTitle: text,
         headerRight: () => (
             <HeaderButtons HeaderButtonComponent={AppHeaderIcon}>
               <Item

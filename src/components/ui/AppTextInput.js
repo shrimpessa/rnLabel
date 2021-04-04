@@ -12,8 +12,8 @@ export const AppTextInput = props => (
         placeholderTextColor={props.placeholderTextColor}
         maxLength={props.maxLength}
         autoCorrect={props.autoCorrect}
-        autoCapitalize={props.autoCapitalize}  
-        multiline  
+        autoCapitalize={props.autoCapitalize}
+        keyboardType={props.keyboardType}
     >
         {props.children}
     </TextInput>
@@ -22,9 +22,9 @@ export const AppTextInput = props => (
 const styles = StyleSheet.create({
     default: {
         borderStyle: 'solid',
-        fontSize: 14,
-        borderBottomWidth: 2,
+        fontSize: 16,
+        borderBottomWidth: 1.4,
         padding: 10,
-        borderBottomColor: APP_COLORS.input
+        borderBottomColor: APP_COLORS.CYPRUS
     }
 })

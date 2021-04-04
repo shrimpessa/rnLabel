@@ -3,8 +3,8 @@ import AppLoading from 'expo-app-loading';
 import { Provider } from 'react-redux';
 
 import { AppNavigation } from './src/navigation/AppNavigation';
-import store from './src/store'
-import { bootstrap } from './src/bootstrap'
+import store from './src/store';
+import { bootstrap } from './src/bootstrap';
 
 export default function App() {
 

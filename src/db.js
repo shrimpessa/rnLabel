@@ -1,13 +1,13 @@
 import * as SQLite from 'expo-sqlite';
 
-const db = SQLite.openDatabase('posts.db')
+const db = SQLite.openDatabase('labels.db')
 
 export class DB {
     static init() {
         return new Promise((resolve, reject) => {
             db.transaction(tx => {
                 tx.executeSql(
-                    'CREATE TABLE IF NOT EXISTS posts (id INTEGER PRIMARY KEY NOT NULL, text TEXT NOT NULL, img TEXT, date TEXT, booked INT)',
+                    'CREATE TABLE IF NOT EXISTS labels (id INTEGER PRIMARY KEY NOT NULL, title TEXT NOT NULL, img TEXT, date TEXT, booked INT, category TEXT, subcategory TEXT, price INT, currency TEXT, style TEXT, season TEXT, it TEXT, eu TEXT, es TEXT, fr TEXT, uk TEXT, usa TEXT, size TEXT, caresigns TEXT, notes TEXT)',
                     [],
                     resolve, // success                    
                     (_, error) => reject(error) // _ - sql запрос
@@ -20,7 +20,7 @@ export class DB {
         return new Promise((resolve, reject) => {
             db.transaction(tx => {
                 tx.executeSql(
-                    'SELECT * FROM posts',
+                    'SELECT * FROM labels',
                     [],
                     (_, result) => resolve(result.rows._array), // получаем набор всех данных из таблицы
                     (_, error) => reject(error)
@@ -33,7 +33,7 @@ export class DB {
         return new Promise((resolve, reject) => {
             db.transaction(tx => {
                 tx.executeSql(
-                    `INSERT INTO posts (text, date, booked, img) VALUES (?, ?, ?, ?)`,
+                    `INSERT INTO labels (text, date, booked, img) VALUES (?, ?, ?, ?)`,
                     [text, date, 0, img],
                     (_, result) => resolve(result.insertId),
                     (_, error) => reject(error)
@@ -46,7 +46,7 @@ export class DB {
         return new Promise((resolve, reject) => {
             db.transaction(tx => {
                 tx.executeSql(
-                    'UPDATE posts SET booked = ? WHERE id = ?',
+                    'UPDATE labels SET booked = ? WHERE id = ?',
                     [post.booked ? 0 : 1, post.id],
                     resolve,                  
                     (_, error) => reject(error)
@@ -59,7 +59,7 @@ export class DB {
         return new Promise((resolve, reject) => {
             db.transaction(tx => {
                 tx.executeSql(
-                    'DELETE FROM posts WHERE id = ?',
+                    'DELETE FROM labels WHERE id = ?',
                     [id],
                     resolve,                  
                     (_, error) => reject(error)

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { View, StyleSheet, Image, Alert } from 'react-native'
 import * as ImagePicker from 'expo-image-picker'
-import * as Permissions from 'expo-permissions'
 
 import { AppButton } from './ui/AppButton'
 
@@ -14,7 +13,7 @@ export const PhotoPicker = ({ onPick }) => {
           if (Platform.OS !== 'web') {
             const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
             if (status !== 'granted') {
-              alert('Sorry, we need camera roll permissions to make this work!');
+              alert('Извините, нам нужно разрешение доступа к камере, чтобы это работало!');
             }
           }
         })();
@@ -52,7 +51,7 @@ const styles = StyleSheet.create({
     },
     image: {
         width: '100%',
-        height: '100%',
+        height: 400,
         marginTop: 10
     },
     button: {

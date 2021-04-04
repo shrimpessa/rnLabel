@@ -5,7 +5,7 @@ import { HeaderButtons, Item } from 'react-navigation-header-buttons'
 import { AppHeaderIcon } from '../components/ui/AppHeaderIcon';
 import { AppText } from '../components/ui/AppText'
 
-export const AboutScreen = () => {
+export const GarmentCareSignsScreen = () => {
     return (
         <View style={styles.center}>
             <AppText>AboutScreen</AppText>
@@ -13,7 +13,7 @@ export const AboutScreen = () => {
     )
 }
 
-AboutScreen.navigationOptions = ({ navigation }) => ({
+GarmentCareSignsScreen.navigationOptions = ({ navigation }) => ({
     headerTitle: 'О приложении',
     headerLeft: () => (
       <HeaderButtons HeaderButtonComponent={AppHeaderIcon}>

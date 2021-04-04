@@ -9,7 +9,7 @@ export const AppText = props => (
 
 const styles = StyleSheet.create({
     default: {
-        fontSize: 14,
+        fontSize: 16,
         color: APP_COLORS.BLACK, 
     }
 })

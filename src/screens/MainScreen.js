@@ -11,7 +11,8 @@ export const MainScreen = ({ navigation }) => {
 
     const openPostHandler = post => {
         navigation.navigate('Post', { 
-            postID: post.id, 
+            postID: post.id,
+            text: post.text,
             date: post.date,
             booked: post.booked
         })
@@ -44,7 +45,7 @@ export const MainScreen = ({ navigation }) => {
 }
 
 MainScreen.navigationOptions = ({ navigation }) => ({
-    headerTitle: 'Мой блог',
+    headerTitle: 'Мои ярлыки',
     headerRight: () => (
       <HeaderButtons HeaderButtonComponent={AppHeaderIcon}>
         <Item

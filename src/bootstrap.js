@@ -1,4 +1,4 @@
-import { DB } from './db'
+import { DB } from './db';
 
 export async function bootstrap() {
   try {

@@ -11,7 +11,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { APP_COLORS } from '../enums/APP_COLORS';
 import { MainScreen } from '../screens/MainScreen';
 import { PostScreen } from '../screens/PostScreen';
-import { AboutScreen } from '../screens/AboutScreen';
+import { GarmentCareSignsScreen } from '../screens/GarmentCareSignsScreen';
 import { CreateScreen } from '../screens/CreateScreen';
 import { BookedScreen } from '../screens/BookedScreen';
 
@@ -82,10 +82,10 @@ const BottomNavigator = Platform.OS === 'android'
             }
         }
     )
-
-const AboutNavigator = createStackNavigator(
+    
+const GarmentCareSignsNavigator = createStackNavigator(
     {
-        About: AboutScreen
+        GarmentCareSigns: GarmentCareSignsScreen
     },
     navigatorOptions
 )
@@ -104,7 +104,7 @@ const MainNavigator = createDrawerNavigator(
         PostTabs: {
             screen: BottomNavigator,
             navigationOptions: {
-                drawerLabel: 'Главная',
+                drawerLabel: 'Мои ярлыки',
                 drawerIcon: (
                     <Ionicons 
                         name="ios-home" 
@@ -117,7 +117,7 @@ const MainNavigator = createDrawerNavigator(
         Create: {
             screen: CreateNavigator,
             navigationOptions: {
-                drawerLabel: 'Создать пост',
+                drawerLabel: 'Новый ярлык',
                 drawerIcon: (
                     <Ionicons 
                         name="ios-add-circle" 
@@ -127,10 +127,10 @@ const MainNavigator = createDrawerNavigator(
                 )
             }
         },
-        About: {
-            screen: AboutNavigator,
+        GarmentCareSigns: {
+            screen: GarmentCareSignsNavigator,
             navigationOptions: {
-                drawerLabel: 'О приложении',
+                drawerLabel: 'Знаки по уходу',
                 drawerIcon: (
                     <Ionicons 
                         name="ios-information" 
