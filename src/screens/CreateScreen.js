@@ -234,13 +234,7 @@ export const CreateScreen = ({ navigation }) => {
 )
 // КОНЕЦ - Нижнее белье
 
-  return (
-    // <ScrollView>
-    //   <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-    //     <View>{underwearScreenPart}</View>
-    //   </TouchableWithoutFeedback>      
-    // </ScrollView>
-    
+  return (    
     <ScrollView>
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
         <View style={styles.wrapper}>

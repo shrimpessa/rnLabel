@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     default: {
         borderStyle: 'solid',
         borderRadius: 3,
-        fontSize: 16,
+        fontSize: 14,
         borderWidth: 1.4,
         padding: 10,
         height: 180,

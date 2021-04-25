@@ -22,7 +22,7 @@ export const AppTextInput = props => (
 const styles = StyleSheet.create({
     default: {
         borderStyle: 'solid',
-        fontSize: 16,
+        fontSize: 14,
         borderBottomWidth: 1.4,
         padding: 10,
         borderBottomColor: APP_COLORS.CYPRUS

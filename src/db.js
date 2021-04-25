@@ -10,7 +10,7 @@ export class DB {
                     'CREATE TABLE IF NOT EXISTS labels (id INTEGER PRIMARY KEY NOT NULL, text TEXT NOT NULL, img TEXT, date TEXT, booked INT, category TEXT, price INT, currency TEXT, style TEXT, season TEXT, it TEXT, eu TEXT, es TEXT, fr TEXT, uk TEXT, usa TEXT, size TEXT, caresigns TEXT, notes TEXT)',
                     [],
                     resolve, // success                    
-                    (_, error) => reject(error) // _ - sql запрос
+                    (_, error) => reject(error) // _ - sql запрос                                                 
                 )
             })
         })
