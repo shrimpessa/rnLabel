@@ -1,16 +1,18 @@
 import React, { useState, useRef } from 'react';
 import { 
   StyleSheet, 
-  View,  
+  View,
   ScrollView, 
   TouchableWithoutFeedback,
   Keyboard,
-  Button
+  Button,
+  Platform
 } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { useDispatch } from 'react-redux';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { Picker } from '@react-native-picker/picker';
+import Icon from 'react-native-vector-icons/Feather';
 
 import { AppHeaderIcon } from '../components/ui/AppHeaderIcon';
 import { AppText } from '../components/ui/AppText';
@@ -26,7 +28,6 @@ export const CreateScreen = ({ navigation }) => {
   const dispatch = useDispatch()
   const [text, setText] = useState('')
   const [category, setCategory] = useState('')
-  const [subcategory, setSubcategory] = useState('')
   
   const [it, setIt] = useState('')
   const [eu, setEu] = useState('')
@@ -50,7 +51,6 @@ export const CreateScreen = ({ navigation }) => {
       date: new Date().toJSON(),
       booked: false,      
       category: category,
-      subcategory: subcategory, // !!
       price: price, // !!
       currency: currency, // !!
       // style: style, // !!
@@ -80,8 +80,9 @@ export const CreateScreen = ({ navigation }) => {
     setCategory(value)
   }
 
-  let clearScreenPart = (<View />)
+  let clearScreenPart = (<View style={{height: 500}} />)
 
+  // НАЧАЛО - Нижнее белье
   let underwearScreenPart = (
     <View>
       <AppTextInput 
@@ -90,6 +91,9 @@ export const CreateScreen = ({ navigation }) => {
         value={text}
         onChangeText={setText}
       />
+
+      <PhotoPicker onPick={photoPickHandler} />
+
       {/* Блок с размерами */}
       <View style={styles.underwearContainer}>
         <AppText style={styles.headerText}>Размеры</AppText>  
@@ -194,7 +198,7 @@ export const CreateScreen = ({ navigation }) => {
         keyboardType='numeric'
       />
       <Picker
-        style={{ width: 120, margin: -10}}
+        style={{ width: 120, height: Platform.OS === 'android' ? 100 : '100%', margin: -10}}
         itemStyle={{ fontSize: 16, color: APP_COLORS.CYPRUS }}
         selectedValue={currency}
         onValueChange={(itemValue, itemIndex) => setCurrency(itemValue)}
@@ -217,40 +221,48 @@ export const CreateScreen = ({ navigation }) => {
       value={notes}
       onChangeText={setNotes}
     />
-    {/* Блок выбора фото и подтверждения изменений */}
-    <PhotoPicker onPick={photoPickHandler} />
-    <Button 
+
+    {/* Кнопка для сохранения новой вещи */}
+    <Button
       style={styles.createButton}
-      title="Создать пост" 
+      title="Сохранить вещь" 
       color={APP_COLORS.CYPRUS} 
       onPress={saveHandler}
       disabled={!text && !imgRef.current}
-    />          
+    />
   </View>
 )
+// КОНЕЦ - Нижнее белье
 
   return (
+    // <ScrollView>
+    //   <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+    //     <View>{underwearScreenPart}</View>
+    //   </TouchableWithoutFeedback>      
+    // </ScrollView>
+    
     <ScrollView>
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
         <View style={styles.wrapper}>
-        
+
           <DropDownPicker
-              items={[
-                {label: 'Верх', value: 'top'},
-                {label: 'Низ', value: 'bottom'},
-                {label: 'Нижнее белье и купальники', value: 'underwear'},
-                {label: 'Верхняя одежда', value: 'outerwear'},
-                {label: 'Аксессуары', value: 'accessories'},
-                {label: 'Обувь', value: 'footwear'},
-              ]}
-              style={styles.dropDownPicker}
-              dropDownStyle={styles.dropDown}
-              labelStyle={styles.dropDownText}
-              activeLabelStyle={styles.dropDownActiveText}
-              dropDownMaxHeight={236}
-              defaultNull
-              placeholder="Выберите категорию одежды"
-              onChangeItem={ item => defineRenderPart(item.value) }
+            items={[
+                {label: 'Верх', value: 'top', icon: () => <Icon name="star" size={18} color={APP_COLORS.CYPRUS} />},
+                {label: 'Низ', value: 'bottom', icon: () => <Icon name="star" size={18} color={APP_COLORS.CYPRUS} />},
+                {label: 'Нижнее белье и купальники', value: 'underwear', icon: () => <Icon name="star" size={18} color={APP_COLORS.CYPRUS} />},
+                {label: 'Верхняя одежда', value: 'outerwear', icon: () => <Icon name="star" size={18} color={APP_COLORS.CYPRUS} />},
+                {label: 'Аксессуары', value: 'accessories', icon: () => <Icon name="star" size={18} color={APP_COLORS.CYPRUS} />},
+                {label: 'Обувь', value: 'footwear', icon: () => <Icon name="star" size={18} color={APP_COLORS.CYPRUS} />}
+            ]}
+            defaultNull
+            containerStyle={{height: 40}}
+            style={{padding: 10, height: '100%', backgroundColor: APP_COLORS.WHITE}}
+            itemStyle={{justifyContent: 'flex-start'}}
+            labelStyle={{color: APP_COLORS.BLACK}}
+            dropDownMaxHeight={300}
+            activeLabelStyle={{color: APP_COLORS.LIGHT_GREY}}
+            placeholder="Выберите категорию одежды"
+            onChangeItem={item => defineRenderPart(item.value)}
           />
           {category === 'underwear'
             ? underwearScreenPart
@@ -278,24 +290,8 @@ CreateScreen.navigationOptions = ({ navigation }) => ({
 const styles = StyleSheet.create({
   wrapper: {
     padding: 10,
-    flex: 1,
-    justifyContent: 'space-between',     
-  },
-  dropDownPicker: {
-    padding: 10,
-    height: 70,
-    backgroundColor: APP_COLORS.CYPRUS,
-  },
-  dropDown: {
-    backgroundColor: APP_COLORS.CYPRUS,
-    height: 500
-  },
-  dropDownText: {
-    color: APP_COLORS.WHITE,
-    fontSize: 16
-  },
-  dropDownActiveText: {
-    color: APP_COLORS.LIGHT_GREY
+    // flex: 1,
+    // justifyContent: 'space-between',     
   },
   textInputArea: {
     marginBottom: 10
