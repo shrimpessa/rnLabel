@@ -49,7 +49,7 @@ const bottomTabsConfig = {
             tabBarIcon: info => (
                 <Ionicons name='ios-albums' size={25} color={info.tintColor} />
             ),
-            tabBarLabel: 'Мои бирки'
+            tabBarLabel: 'Моя одежда'
         }
     },
     Booked: {
@@ -104,7 +104,7 @@ const MainNavigator = createDrawerNavigator(
         PostTabs: {
             screen: BottomNavigator,
             navigationOptions: {
-                drawerLabel: 'Мои ярлыки',
+                drawerLabel: 'Моя одежда',
                 drawerIcon: (
                     <Ionicons 
                         name="ios-home" 
@@ -117,7 +117,7 @@ const MainNavigator = createDrawerNavigator(
         Create: {
             screen: CreateNavigator,
             navigationOptions: {
-                drawerLabel: 'Новый ярлык',
+                drawerLabel: 'Добавить новую вещь',
                 drawerIcon: (
                     <Ionicons 
                         name="ios-add-circle" 

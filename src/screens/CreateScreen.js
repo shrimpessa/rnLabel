@@ -26,6 +26,7 @@ export const CreateScreen = ({ navigation }) => {
   const dispatch = useDispatch()
   const [text, setText] = useState('')
   const [category, setCategory] = useState('')
+  const [subcategory, setSubcategory] = useState('')
   
   const [it, setIt] = useState('')
   const [eu, setEu] = useState('')
@@ -34,8 +35,8 @@ export const CreateScreen = ({ navigation }) => {
   const [uk, setUk] = useState('')
   const [usa, setUsa] = useState('')
 
-  const [price, setPrice] = useState(0)
-  const [currency, setCurrency] = useState(0)
+  const [price, setPrice] = useState()
+  const [currency, setCurrency] = useState()
 
   const [notes, setNotes] = useState('')
 
@@ -52,8 +53,8 @@ export const CreateScreen = ({ navigation }) => {
       subcategory: subcategory, // !!
       price: price, // !!
       currency: currency, // !!
-      style: style, // !!
-      season: season, // !!
+      // style: style, // !!
+      // season: season, // !!
 
       it: it,
       eu: eu,
@@ -62,8 +63,8 @@ export const CreateScreen = ({ navigation }) => {
       uk: uk,
       usa: usa,
 
-      size: size, // !!
-      caresigns: caresigns,
+      // size: size, // !!
+      // caresigns: caresigns,
 
       notes: notes,
     }
@@ -232,6 +233,7 @@ export const CreateScreen = ({ navigation }) => {
     <ScrollView>
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
         <View style={styles.wrapper}>
+        
           <DropDownPicker
               items={[
                 {label: 'Верх', value: 'top'},
@@ -261,7 +263,7 @@ export const CreateScreen = ({ navigation }) => {
 }
 
 CreateScreen.navigationOptions = ({ navigation }) => ({
-    headerTitle: 'Создание нового ярлыка',
+    headerTitle: 'Добавить новую вещь',
     headerLeft: () => (
       <HeaderButtons HeaderButtonComponent={AppHeaderIcon}>
         <Item

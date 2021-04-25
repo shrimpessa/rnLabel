@@ -45,7 +45,7 @@ export const MainScreen = ({ navigation }) => {
 }
 
 MainScreen.navigationOptions = ({ navigation }) => ({
-    headerTitle: 'Мои ярлыки',
+    headerTitle: 'Моя одежда',
     headerRight: () => (
       <HeaderButtons HeaderButtonComponent={AppHeaderIcon}>
         <Item

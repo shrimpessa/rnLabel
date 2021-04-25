@@ -26,7 +26,7 @@ export const BookedScreen = ({ navigation }) => {
 }
 
 BookedScreen.navigationOptions = ({ navigation }) => ({
-    headerTitle: 'Избранное',
+    headerTitle: 'Любимое',
     headerLeft: () => (
       <HeaderButtons HeaderButtonComponent={AppHeaderIcon}>
         <Item

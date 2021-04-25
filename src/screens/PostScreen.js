@@ -38,8 +38,8 @@ export const PostScreen = ({ navigation }) => {
 
     const removeHandler = () => {
         Alert.alert(
-            "Удаление ярлыка",
-            "Вы точно хотите удалить этот ярлык?",
+            "Удаление вещи",
+            "Вы точно хотите удалить эту вещь?",
             [
               {
                 text: "Отменить",
@@ -64,7 +64,7 @@ export const PostScreen = ({ navigation }) => {
     }
 
     return (
-        <ScrollView>
+        <ScrollView style={styles.wrapper}>
             <Image source={{ uri: post.img }} style={styles.image} />
             <View style={styles.textWrap}>
                 <AppText>{post.text}</AppText>
@@ -98,6 +98,9 @@ PostScreen.navigationOptions = ({ navigation }) => {
 }
 
 const styles = StyleSheet.create({
+    wrapper: {
+        padding: 10
+    },
     image: {
         width: '100%',
         height: 200       
