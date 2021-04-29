@@ -99,8 +99,7 @@ const CreateNavigator = createStackNavigator(
 
 // главный навигатор
 const MainNavigator = createDrawerNavigator(
-    {
-        // главное и избранное
+    {        
         PostTabs: {
             screen: BottomNavigator,
             navigationOptions: {

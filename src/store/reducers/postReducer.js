@@ -25,7 +25,7 @@ export const postReducer = (state = initialState, action) => {
         })
         // в state заменяем ключ allPosts на новый
         return {
-        ...state,
+            ...state,
             allPosts,
             bookedPosts: allPosts.filter(post => post.booked)
         }

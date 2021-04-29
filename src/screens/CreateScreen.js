@@ -6,13 +6,15 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   Button,
-  Platform
+  Platform,
+  Text
 } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { useDispatch } from 'react-redux';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { Picker } from '@react-native-picker/picker';
 import Icon from 'react-native-vector-icons/Feather';
+import { RadioButton } from 'react-native-paper';
 
 import { AppHeaderIcon } from '../components/ui/AppHeaderIcon';
 import { AppText } from '../components/ui/AppText';
@@ -37,8 +39,8 @@ export const CreateScreen = ({ navigation }) => {
   const [usa, setUsa] = useState('')
 
   const [price, setPrice] = useState()
-  const [currency, setCurrency] = useState()
-
+  const [currency, setCurrency] = useState('ruble')
+  const [season, setSeason] = useState('summer')
   const [notes, setNotes] = useState('')
 
   // при изменении не будет рендериться компонент
@@ -51,10 +53,9 @@ export const CreateScreen = ({ navigation }) => {
       date: new Date().toJSON(),
       booked: false,      
       category: category,
-      price: price, // !!
-      currency: currency, // !!
-      // style: style, // !!
-      // season: season, // !!
+      price: price,
+      currency: currency,
+      season: season,
 
       it: it,
       eu: eu,
@@ -80,6 +81,9 @@ export const CreateScreen = ({ navigation }) => {
     setCategory(value)
   }
 
+  
+  
+
   let clearScreenPart = (<View style={{height: 500}} />)
 
   // НАЧАЛО - Нижнее белье
@@ -91,6 +95,23 @@ export const CreateScreen = ({ navigation }) => {
         value={text}
         onChangeText={setText}
       />
+      {/* Блок сезонности */}
+      <View style={styles.seasonBlock}>
+          <RadioButton.Group onValueChange={newValue => setSeason(newValue)} value={season}>
+            <View style={{flexDirection: 'row'}}>          
+              <RadioButton value="summer" status={season === 'summer' ? 'checked' : 'unchecked' } />
+              <Text style={styles.radioButtonText}>Лето</Text>
+            </View>
+            <View style={{flexDirection: 'row'}}>          
+              <RadioButton value="autumnSpring" status={season === 'autumnSpring' ? 'checked' : 'unchecked' } />
+              <Text style={styles.radioButtonText}>Осень/весна</Text>
+            </View>
+            <View style={{flexDirection: 'row'}}>          
+              <RadioButton value="winter" status={season === 'winter' ? 'checked' : 'unchecked' } />
+              <Text style={styles.radioButtonText}>Зима</Text>
+            </View>
+          </RadioButton.Group>
+      </View>     
 
       <PhotoPicker onPick={photoPickHandler} />
 
@@ -198,10 +219,10 @@ export const CreateScreen = ({ navigation }) => {
         keyboardType='numeric'
       />
       <Picker
-        style={{ width: 120, height: Platform.OS === 'android' ? 100 : '100%', margin: -10}}
+        style={{ width: '50%', height: Platform.OS === 'android' ? 100 : '100%', margin: -10}}
         itemStyle={{ fontSize: 16, color: APP_COLORS.CYPRUS }}
         selectedValue={currency}
-        onValueChange={(itemValue, itemIndex) => setCurrency(itemValue)}
+        onValueChange={(itemValue) => setCurrency(itemValue)}
       >
         <Picker.Item label="RUB ₽" value="ruble" />
         <Picker.Item label="UAH ₴" value="hryvnia" />
@@ -234,11 +255,29 @@ export const CreateScreen = ({ navigation }) => {
 )
 // КОНЕЦ - Нижнее белье
 
+  const renderPartChoice = () => {
+    switch(category) {     
+      case "top":
+        return <AppText>top</AppText>;
+      case "bottom":
+        return <AppText>bottom</AppText>;
+      case "underwear":
+        return underwearScreenPart;
+      case "outerwear":
+        return <AppText>outerwear</AppText>;
+      case "accessories":
+        return <AppText>accessories</AppText>;
+      case "footwear":
+        return <AppText>footwear</AppText>;
+      default:
+        return clearScreenPart
+    }
+  }
+
   return (    
     <ScrollView>
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
         <View style={styles.wrapper}>
-
           <DropDownPicker
             items={[
                 {label: 'Верх', value: 'top', icon: () => <Icon name="star" size={18} color={APP_COLORS.CYPRUS} />},
@@ -258,10 +297,7 @@ export const CreateScreen = ({ navigation }) => {
             placeholder="Выберите категорию одежды"
             onChangeItem={item => defineRenderPart(item.value)}
           />
-          {category === 'underwear'
-            ? underwearScreenPart
-            : clearScreenPart
-          }
+          {renderPartChoice()}
         </View>
       </TouchableWithoutFeedback>
     </ScrollView>
@@ -283,18 +319,16 @@ CreateScreen.navigationOptions = ({ navigation }) => ({
 
 const styles = StyleSheet.create({
   wrapper: {
-    padding: 10,
-    // flex: 1,
-    // justifyContent: 'space-between',     
+    padding: 10     
   },
   textInputArea: {
-    marginBottom: 10
+    marginVertical: 10,
   },
   createButton: {
     position: 'absolute',
     margin: 16,
     right: 10,
-    bottom: 10,
+    bottom: 10
   },
   headerText: {
     fontWeight: '500',
@@ -305,19 +339,26 @@ const styles = StyleSheet.create({
   elementsNearbyContainer: {
     flexDirection: 'row', 
     alignItems: 'center', 
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
   },
   // underwear
   underwearContainer: {
-    borderWidth: 1.4,
-    borderRadius: 5,
+    borderWidth: 1,
+    borderRadius: 10,
     padding: 10,
-    backgroundColor: APP_COLORS.WHITE
+    marginVertical: 10,
+    backgroundColor: APP_COLORS.WHITE,
+    borderColor: APP_COLORS.NEVADA
   },  
   underwearLineBlock: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     padding: 6,
+  },
+  seasonBlock: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginVertical: 10,
   },
   sizeBlock: {
     width: 64,
@@ -335,5 +376,9 @@ const styles = StyleSheet.create({
   },
   input: {
     textAlign: 'center',
+  },
+  radioButtonText: {
+    fontSize: 14,
+    color: APP_COLORS.BLACK,    
   },
 })

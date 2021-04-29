@@ -11,6 +11,7 @@ export const Post = ({ post, onOpen }) => {
                     <View style={styles.textWrap}>
                         {/* <AppText style={styles.title}>{new Date(post.date).toLocaleDateString()}</AppText> */}
                         <AppText style={styles.title}>{post.text}</AppText>
+                        <AppText style={styles.title}>{post.category}</AppText>
                     </View>
                 </ImageBackground>
             </View>

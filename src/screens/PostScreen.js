@@ -68,6 +68,18 @@ export const PostScreen = ({ navigation }) => {
             <Image source={{ uri: post.img }} style={styles.image} />
             <View style={styles.textWrap}>
                 <AppText>{post.text}</AppText>
+                <AppText>{new Date(post.date).toLocaleDateString()}</AppText>
+                <AppText>{post.price}</AppText>
+                <AppText>{post.currency}</AppText>
+                <AppText>{post.season}</AppText>
+                <AppText>{post.currency}</AppText>
+                <AppText>{post.it}</AppText>
+                <AppText>{post.eu}</AppText>
+                <AppText>{post.es}</AppText>
+                <AppText>{post.fr}</AppText>
+                <AppText>{post.uk}</AppText>
+                <AppText>{post.usa}</AppText>
+                <AppText>{post.notes}</AppText>
             </View>
             <AppButton onPress={removeHandler} color={APP_COLORS.CYPRUS}>
                 Удалить
