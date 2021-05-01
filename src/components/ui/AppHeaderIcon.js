@@ -9,6 +9,6 @@ export const AppHeaderIcon = props => (
         {...props}
         iconSize={24} 
         IconComponent={Ionicons}
-        color={Platform.OS === 'android' ? APP_COLORS.WHITE : APP_COLORS.CYPRUS}
+        color={Platform.OS === 'android' ? APP_COLORS.WHITE : APP_COLORS.ORANGE}
     />
 )

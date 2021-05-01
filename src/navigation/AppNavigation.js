@@ -18,11 +18,11 @@ import { BookedScreen } from '../screens/BookedScreen';
 const navigatorOptions = {
     defaultNavigationOptions: {
         headerStyle: {
-            backgroundColor: Platform.OS === 'ios' ? APP_COLORS.WHITE : APP_COLORS.CYPRUS,
+            backgroundColor: Platform.OS === 'ios' ? APP_COLORS.WHITE : APP_COLORS.ORANGE,
             borderBottomWidth: Platform.OS === 'ios' ? 1 : 0,
-            borderBottomColor: APP_COLORS.CYPRUS                
+            borderBottomColor: APP_COLORS.ORANGE                
         },
-        headerTintColor: Platform.OS === 'ios' ? APP_COLORS.CYPRUS : APP_COLORS.WHITE
+        headerTintColor: Platform.OS === 'ios' ? APP_COLORS.ORANGE : APP_COLORS.WHITE
     }
 }
 
@@ -70,7 +70,7 @@ const BottomNavigator = Platform.OS === 'android'
             activeTintColor: APP_COLORS.WHITE,
             shifting: true,
             barStyle: {
-                backgroundColor: APP_COLORS.CYPRUS
+                backgroundColor: APP_COLORS.ORANGE
             }
         }
     ) 
@@ -78,7 +78,7 @@ const BottomNavigator = Platform.OS === 'android'
         bottomTabsConfig,  
         {
             tabBarOptions: {
-                activeTintColor: APP_COLORS.CYPRUS
+                activeTintColor: APP_COLORS.ORANGE
             }
         }
     )
@@ -108,7 +108,7 @@ const MainNavigator = createDrawerNavigator(
                     <Ionicons 
                         name="ios-home" 
                         size={24} 
-                        color={APP_COLORS.CYPRUS} 
+                        color={APP_COLORS.ORANGE} 
                     />
                 )
             }
@@ -121,7 +121,7 @@ const MainNavigator = createDrawerNavigator(
                     <Ionicons 
                         name="ios-add-circle" 
                         size={24} 
-                        color={APP_COLORS.CYPRUS} 
+                        color={APP_COLORS.ORANGE} 
                     />
                 )
             }
@@ -134,7 +134,7 @@ const MainNavigator = createDrawerNavigator(
                     <Ionicons 
                         name="ios-information" 
                         size={24} 
-                        color={APP_COLORS.CYPRUS} 
+                        color={APP_COLORS.ORANGE} 
                     />
                 )
             }
@@ -142,7 +142,7 @@ const MainNavigator = createDrawerNavigator(
     },
     {
         contentOptions: {
-            activeTintColor: APP_COLORS.CYPRUS
+            activeTintColor: APP_COLORS.ORANGE
         }
     }
 )

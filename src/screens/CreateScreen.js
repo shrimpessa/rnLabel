@@ -332,8 +332,10 @@ const styles = StyleSheet.create({
   },
   headerText: {
     fontWeight: '500',
-    textAlign: 'center',
+    padding: 10,
+    marginBottom: 10,
     paddingBottom: 8,
+    fontSize: 16,
     color: APP_COLORS.CYPRUS
   },
   elementsNearbyContainer: {
@@ -353,7 +355,8 @@ const styles = StyleSheet.create({
   underwearLineBlock: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    padding: 6,
+    padding: 10,
+    marginBottom: 10
   },
   seasonBlock: {
     flexDirection: 'row',
@@ -367,8 +370,8 @@ const styles = StyleSheet.create({
     borderStyle: 'solid',      
     borderWidth: 1.4,
     borderRadius: 3,
-    borderColor: APP_COLORS.CYPRUS,  
-    backgroundColor: APP_COLORS.CYPRUS 
+    borderColor: APP_COLORS.NEVADA,  
+    backgroundColor: APP_COLORS.NEVADA 
   },
   countryCodeTitle: {   
     textAlign: 'center',
