@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { 
   StyleSheet, 
   View,
@@ -10,7 +10,7 @@ import {
   Text
 } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { Picker } from '@react-native-picker/picker';
 import Icon from 'react-native-vector-icons/Feather';
@@ -23,13 +23,18 @@ import { AppTextInput } from '../components/ui/AppTextInput';
 import { addPost } from '../store/actions/postActions';
 import { PhotoPicker } from '../components/PhotoPicker';
 import { APP_COLORS } from '../enums/APP_COLORS';
-import { TextInput } from 'react-native-gesture-handler';
+import { loadCareSigns } from '../store/actions/careSignsAction';
+import { CareSignsList } from '../components/CareSignsList';
 
 export const CreateScreen = ({ navigation }) => {
 
   const dispatch = useDispatch()
+
   const [text, setText] = useState('')
   const [category, setCategory] = useState('')
+  const [price, setPrice] = useState()
+  const [currency, setCurrency] = useState('ruble')
+  const [season, setSeason] = useState('autumnSpring')
   
   const [it, setIt] = useState('')
   const [eu, setEu] = useState('')
@@ -37,14 +42,18 @@ export const CreateScreen = ({ navigation }) => {
   const [fr, setFr] = useState('')
   const [uk, setUk] = useState('')
   const [usa, setUsa] = useState('')
-
-  const [price, setPrice] = useState()
-  const [currency, setCurrency] = useState('ruble')
-  const [season, setSeason] = useState('summer')
+  
+  const [caresigns, setCaresigns] = useState('')
   const [notes, setNotes] = useState('')
 
   // при изменении не будет рендериться компонент
   const imgRef = useRef()
+
+  useEffect(() => {
+    dispatch(loadCareSigns())
+  }, [dispatch])
+
+  const allCareSigns = useSelector(state => state.careSigns.allCareSigns)
 
   const saveHandler = () => {
     const thisLabel = {
@@ -65,8 +74,7 @@ export const CreateScreen = ({ navigation }) => {
       usa: usa,
 
       // size: size, // !!
-      // caresigns: caresigns,
-
+      caresigns: caresigns,
       notes: notes,
     }
     dispatch(addPost(thisLabel))
@@ -81,20 +89,30 @@ export const CreateScreen = ({ navigation }) => {
     setCategory(value)
   }
 
-  
-  
+  const addCareSign = signID => {
+    let thisSign
+    thisSign += '#' + signID
+    setCaresigns(thisSign)
+  }
 
   let clearScreenPart = (<View style={{height: 500}} />)
 
   // НАЧАЛО - Нижнее белье
   let underwearScreenPart = (
     <View>
+
+    <CareSignsList style={{flexDirection: 'row'}} data={allCareSigns} />
+
+
+
+
       <AppTextInput 
         style={styles.textInputArea}
         placeholder="Название ващей вещи"
         value={text}
         onChangeText={setText}
       />
+
       {/* Блок сезонности */}
       <View style={styles.seasonBlock}>
           <RadioButton.Group onValueChange={newValue => setSeason(newValue)} value={season}>
@@ -111,8 +129,9 @@ export const CreateScreen = ({ navigation }) => {
               <Text style={styles.radioButtonText}>Зима</Text>
             </View>
           </RadioButton.Group>
-      </View>     
+      </View>
 
+      {/* Блок с фотографией */}
       <PhotoPicker onPick={photoPickHandler} />
 
       {/* Блок с размерами */}
@@ -207,6 +226,7 @@ export const CreateScreen = ({ navigation }) => {
             </View>  
         </View>     
     </View>
+
     {/* Блок цены */}
     <View style={styles.elementsNearbyContainer}> 
       <AppTextInput
@@ -234,6 +254,7 @@ export const CreateScreen = ({ navigation }) => {
         <Picker.Item label="KRW ₩" value="won" />
       </Picker>
     </View>
+
     {/* Блок заметок */}
     <AppText style={styles.headerText}>Заметки</AppText>  
     <AppMultilineTextInput 
