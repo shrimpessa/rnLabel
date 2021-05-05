@@ -8,14 +8,15 @@ import {
 
 import { APP_COLORS } from '../enums/APP_COLORS'
 
-export const CareSign = ({ careSign }) => {
+export const CareSign = ({ careSign, onCareSignPress }) => {
+    
+  const [ isCareSignSelected, setisCareSignSelected ] = useState(true)
 
-    const [ isCareSignSelected, setisCareSignSelected ] = useState(true)
-
-    const selectItem = () => {
+    const changeDisplayOfTheCareSignsSelection = () => {
         setisCareSignSelected(!isCareSignSelected)
-        console.log(isCareSignSelected)
-    } 
+        // console.log(isCareSignSelected)
+        onCareSignPress(careSign.id, isCareSignSelected)
+    }  
 
     let displaySelectedItem = (
         <ImageBackground style={styles.image} source={{ uri: careSign.img }}>
@@ -30,7 +31,10 @@ export const CareSign = ({ careSign }) => {
     )     
 
     return (        
-        <TouchableOpacity activeOpacity={0.7} onPress={selectItem}>
+        <TouchableOpacity 
+          activeOpacity={0.7} 
+          onPress={changeDisplayOfTheCareSignsSelection}
+        >
             <View style={styles.post}>
                 {isCareSignSelected == true ? displayNotSelectedItem : displaySelectedItem}
             </View>

@@ -89,10 +89,14 @@ export const CreateScreen = ({ navigation }) => {
     setCategory(value)
   }
 
-  const addCareSign = signID => {
-    let thisSign
-    thisSign += '#' + signID
-    setCaresigns(thisSign)
+  
+  let careSignsArray = []
+  const onCareSignPress = (careSignId, isCareSignSelected) => {
+    isCareSignSelected 
+      ? careSignsArray.push(careSignId) 
+      : careSignsArray = careSignsArray.filter(item => item != careSignId)
+
+    setCaresigns(careSignsArray.join('#'))
   }
 
   let clearScreenPart = (<View style={{height: 500}} />)
@@ -100,12 +104,6 @@ export const CreateScreen = ({ navigation }) => {
   // НАЧАЛО - Нижнее белье
   let underwearScreenPart = (
     <View>
-
-    <CareSignsList style={{flexDirection: 'row'}} data={allCareSigns} />
-
-
-
-
       <AppTextInput 
         style={styles.textInputArea}
         placeholder="Название ващей вещи"
@@ -254,6 +252,8 @@ export const CreateScreen = ({ navigation }) => {
         <Picker.Item label="KRW ₩" value="won" />
       </Picker>
     </View>
+
+    <CareSignsList style={{flexDirection: 'row'}} data={allCareSigns} onCareSignPress={onCareSignPress} />
 
     {/* Блок заметок */}
     <AppText style={styles.headerText}>Заметки</AppText>  

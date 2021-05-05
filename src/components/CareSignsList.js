@@ -2,7 +2,7 @@ import React from 'react'
 import { View, StyleSheet, FlatList } from 'react-native'
 import { CareSign } from './CareSign'
 
-export const CareSignsList = ({ data }) => {
+export const CareSignsList = ({ data, onCareSignPress }) => {
 
     let numColumns = 4
     return (
@@ -12,7 +12,7 @@ export const CareSignsList = ({ data }) => {
             numColumns={numColumns}
             data={data}
             keyExtractor={careSign => careSign.id.toString()}
-            renderItem={({ item }) => <CareSign careSign={item} />}
+            renderItem={({ item }) => <CareSign careSign={item} onCareSignPress={onCareSignPress} />}
         />
         </View>
     )
