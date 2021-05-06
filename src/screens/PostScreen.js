@@ -3,8 +3,7 @@ import React, { useEffect, useCallback } from 'react';
 import { 
     StyleSheet, 
     View, 
-    ScrollView, 
-    Image, 
+    ScrollView,
     Alert, 
     ImageBackground 
 } from 'react-native';
@@ -14,7 +13,6 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons'; 
 import { Entypo } from '@expo/vector-icons'; 
 import { AntDesign } from '@expo/vector-icons'; 
-import { MaterialIcons } from '@expo/vector-icons'; 
 
 import { AppText } from '../components/ui/AppText';
 import { AppButton } from '../components/ui/AppButton';
@@ -153,7 +151,6 @@ export const PostScreen = ({ navigation }) => {
             <View style={styles.underwearContainer}>
                 <View style={{flexDirection: 'row'}}>
                     <AppText style={styles.titles}>Размеры</AppText>
-                    {/* <AntDesign style={{marginTop: '2.2%'}} name="tago" size={22} color={APP_COLORS.BROWN} /> */}
                 </View>
                 
                 <View style={styles.underwearLineBlock}>
@@ -201,8 +198,7 @@ export const PostScreen = ({ navigation }) => {
             <View>
                 <View style={{flexDirection: 'row'}}>
                     <AppText style={styles.titles}>Цена</AppText>
-                    {/* <MaterialIcons style={{marginTop: '2.2%'}} name="attach-money" size={24} color={APP_COLORS.BROWN} /> */}
-                </View>            
+                 </View>            
                 <View style={styles.priceCurrencyBlock}>                
                     <AppText style={styles.priceText}>{checkingPriceForEmptiness(post.price)}</AppText>
                     <AppText style={styles.currencyText}>{currencyHandler()}</AppText>
@@ -219,7 +215,6 @@ export const PostScreen = ({ navigation }) => {
             <View>
                 <View style={{flexDirection: 'row'}}>
                     <AppText style={styles.titles}>Заметки</AppText>
-                    {/* <Entypo style={{marginTop: '2%'}} name="open-book" size={24} color={APP_COLORS.BROWN} /> */}
                 </View>                
                 <AppText style={styles.notesText}>{checkingNotesForEmptiness(post.notes)}</AppText>               
             </View>
@@ -238,7 +233,6 @@ export const PostScreen = ({ navigation }) => {
 }
 
 PostScreen.navigationOptions = ({ navigation }) => {
-    // const date = navigation.getParam('date')
     const booked = navigation.getParam('booked')
     const text = navigation.getParam('text')
     const toggleHandler = navigation.getParam('toggleHandler')
