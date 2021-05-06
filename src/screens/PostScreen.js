@@ -124,6 +124,9 @@ export const PostScreen = ({ navigation }) => {
 
     const checkingNotesForEmptiness = (note) => {
         let thisNote
+        if (note == null) {
+            return 'Вы не добавили каких-либо заметок.'
+        }
         note.trim() == ''
             ? thisNote = <AppText style={styles.notesText}>Вы не оставили заметок.</AppText>
             : thisNote = <AppText style={styles.notesText}>{note}</AppText>
