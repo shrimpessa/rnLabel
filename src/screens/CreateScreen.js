@@ -72,8 +72,7 @@ export const CreateScreen = ({ navigation }) => {
       fr: fr,
       uk: uk,
       usa: usa,
-
-      // size: size, // !!
+      
       caresigns: caresigns,
       notes: notes,
     }
@@ -88,15 +87,17 @@ export const CreateScreen = ({ navigation }) => {
   const defineRenderPart = value => {
     setCategory(value)
   }
-
   
-  let careSignsArray = []
   const onCareSignPress = (careSignId, isCareSignSelected) => {
-    isCareSignSelected 
-      ? careSignsArray.push(careSignId) 
-      : careSignsArray = careSignsArray.filter(item => item != careSignId)
-
-    setCaresigns(careSignsArray.join('#'))
+    let careSignsString = ''
+    if (!isCareSignSelected) {
+      careSignsString += careSignId + '#'
+      setCaresigns(caresigns + careSignsString)
+    } else {
+      careSignsString = caresigns.split(careSignId).join('');
+      setCaresigns(careSignsString)
+    }
+    // console.log(caresigns)
   }
 
   let clearScreenPart = (<View style={{height: 500}} />)

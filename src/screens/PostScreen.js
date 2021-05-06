@@ -208,6 +208,13 @@ export const PostScreen = ({ navigation }) => {
 
             <View>
                 <View style={{flexDirection: 'row'}}>
+                    <AppText style={styles.titles}>Знаки по уходу</AppText>
+                </View>                
+                <AppText style={styles.notesText}>{post.caresigns}</AppText>               
+            </View>
+
+            <View>
+                <View style={{flexDirection: 'row'}}>
                     <AppText style={styles.titles}>Заметки</AppText>
                     {/* <Entypo style={{marginTop: '2%'}} name="open-book" size={24} color={APP_COLORS.BROWN} /> */}
                 </View>                

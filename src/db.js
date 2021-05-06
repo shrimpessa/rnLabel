@@ -7,6 +7,7 @@ export class DB {
         return new Promise((resolve, reject) => {
             db.transaction(tx => {
                 tx.executeSql(
+                    // 'DROP TABLE labels',
                     'CREATE TABLE IF NOT EXISTS labels (id INTEGER PRIMARY KEY NOT NULL, text TEXT NOT NULL, img TEXT, date TEXT, booked INT, category TEXT, price INT, currency TEXT, season TEXT, it TEXT, eu TEXT, es TEXT, fr TEXT, uk TEXT, usa TEXT, size TEXT, caresigns TEXT, notes TEXT)',
                     [],
                     resolve, // success                    
@@ -29,11 +30,11 @@ export class DB {
         })
     }
 
-    static createPost({ text, date, booked, img, category, price, currency, season, it, eu, es, fr, uk, usa, size, notes }) {
+    static createPost({ text, date, booked, img, category, price, currency, season, it, eu, es, fr, uk, usa, size, caresigns, notes }) {
         return new Promise((resolve, reject) => {
             db.transaction(tx => {
                 tx.executeSql(
-                    `INSERT INTO labels (text, date, booked, img, category, price, currency, season, it, eu, es, fr, uk, usa, size, notes) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+                    `INSERT INTO labels (text, date, booked, img, category, price, currency, season, it, eu, es, fr, uk, usa, size, caresigns, notes) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
                     [text, date, 0, img, category, price, currency, season, it, eu, es, fr, uk, usa, size, notes],
                     (_, result) => resolve(result.insertId),
                     (_, error) => reject(error)
