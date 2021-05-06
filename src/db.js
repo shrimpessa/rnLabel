@@ -35,7 +35,7 @@ export class DB {
             db.transaction(tx => {
                 tx.executeSql(
                     `INSERT INTO labels (text, date, booked, img, category, price, currency, season, it, eu, es, fr, uk, usa, size, caresigns, notes) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-                    [text, date, 0, img, category, price, currency, season, it, eu, es, fr, uk, usa, size, notes],
+                    [text, date, 0, img, category, price, currency, season, it, eu, es, fr, uk, usa, size, caresigns, notes],
                     (_, result) => resolve(result.insertId),
                     (_, error) => reject(error)
                 )

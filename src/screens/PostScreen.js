@@ -19,10 +19,14 @@ import { AppButton } from '../components/ui/AppButton';
 import { APP_COLORS } from '../enums/APP_COLORS';
 import { AppHeaderIcon } from '../components/ui/AppHeaderIcon';
 import { removePost, toogleBooked } from '../store/actions/postActions';
+import { CareSignsForShowList } from '../components/CareSignsForShowList';
 
 export const PostScreen = ({ navigation }) => {
 
     const dispatch = useDispatch()
+
+    const allCareSigns = useSelector(state => state.careSigns.allCareSigns)
+
     const postID = navigation.getParam('postID')
     const post = useSelector(state => 
         state.post.allPosts.find(p => p.id === postID)
@@ -209,7 +213,8 @@ export const PostScreen = ({ navigation }) => {
                 <View style={{flexDirection: 'row'}}>
                     <AppText style={styles.titles}>Знаки по уходу</AppText>
                 </View>                
-                <AppText style={styles.notesText}>{post.caresigns}</AppText>               
+                <AppText style={styles.notesText}>{post.caresigns}</AppText> 
+                {/* <CareSignsForShowList style={{flexDirection: 'row'}} data={allCareSigns} /> */}
             </View>
 
             <View>
