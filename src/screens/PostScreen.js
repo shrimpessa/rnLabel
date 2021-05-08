@@ -19,11 +19,15 @@ import { AppButton } from '../components/ui/AppButton';
 import { APP_COLORS } from '../enums/APP_COLORS';
 import { AppHeaderIcon } from '../components/ui/AppHeaderIcon';
 import { removePost, toogleBooked } from '../store/actions/postActions';
-import { CareSignsForShowList } from '../components/CareSignsForShowList';
+import { loadCareSigns } from '../store/actions/careSignsAction';
 
 export const PostScreen = ({ navigation }) => {
 
     const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(loadCareSigns())
+      }, [dispatch])
 
     const allCareSigns = useSelector(state => state.careSigns.allCareSigns)
 
@@ -135,6 +139,28 @@ export const PostScreen = ({ navigation }) => {
         return thisNote
     }
 
+    const parseCareSignsString = () => {
+        return post.caresigns.split('#')
+    }
+
+    const getCareSignPicture = () => {
+        let arrayOfCareSignsIDs = parseCareSignsString()
+        
+        let pictureSet = []
+
+        allCareSigns.map(item => {
+            arrayOfCareSignsIDs.map(s =>
+                { if (item.id == s) {pictureSet.push(item.img)} }
+            )
+        })
+        
+        return (
+            pictureSet.map(i => {
+                return <ImageBackground style={{width: 60, height: 60}} source={{ uri: i }} />
+            })
+        )
+    }
+
     // действия при удалении поста
     if (!post) {
         return null
@@ -211,10 +237,11 @@ export const PostScreen = ({ navigation }) => {
 
             <View>
                 <View style={{flexDirection: 'row'}}>
-                    <AppText style={styles.titles}>Знаки по уходу</AppText>
-                </View>                
-                <AppText style={styles.notesText}>{post.caresigns}</AppText> 
-                {/* <CareSignsForShowList style={{flexDirection: 'row'}} data={allCareSigns} /> */}
+                    <AppText style={styles.titles}>Знаки по уходу</AppText>                    
+                </View>            
+                <View style={{padding: 10, display: 'flex', flexWrap: 'wrap', flexDirection: 'row'}}>
+                    {getCareSignPicture()}
+                </View>
             </View>
 
             <View>
