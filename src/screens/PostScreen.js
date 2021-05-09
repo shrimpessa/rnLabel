@@ -140,7 +140,12 @@ export const PostScreen = ({ navigation }) => {
     }
 
     const parseCareSignsString = () => {
-        return post.caresigns.split('#')
+        let array = post.caresigns.split('#')
+        let uniqueArray = array.filter(function(item, pos) {
+            return array.indexOf(item) == pos
+        })
+        console.log(uniqueArray)
+        return uniqueArray
     }
 
     const getCareSignPicture = () => {
@@ -156,7 +161,7 @@ export const PostScreen = ({ navigation }) => {
         
         return (
             pictureSet.map(i => {
-                return <ImageBackground style={{width: 60, height: 60}} source={{ uri: i }} />
+                return <ImageBackground key={i + 10} style={{width: 60, height: 60}} source={{ uri: i }} />
             })
         )
     }
