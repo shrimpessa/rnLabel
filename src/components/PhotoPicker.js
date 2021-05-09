@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import { View, StyleSheet, Image, Alert } from 'react-native'
+import { View, StyleSheet, Image, Button } from 'react-native'
 import * as ImagePicker from 'expo-image-picker'
 
 import { AppButton } from './ui/AppButton'
+import { APP_COLORS } from '../enums/APP_COLORS'
 
 export const PhotoPicker = ({ onPick }) => {
     // изначально картинки нет
@@ -36,9 +37,11 @@ export const PhotoPicker = ({ onPick }) => {
 
     return (
         <View style={styles.wrapper}>
-            <AppButton style={styles.button} onPress={pickImage}>
-                Выбрать фото
-            </AppButton>
+            <Button
+                title="Выбрать фото" 
+                color={APP_COLORS.ORANGE} 
+                onPress={pickImage}
+            />
             {/* если картинка создана, тогда рендерим ее */}
             {image && <Image style={styles.image} source={{ uri: image }} />}
         </View>
@@ -47,12 +50,16 @@ export const PhotoPicker = ({ onPick }) => {
 
 const styles = StyleSheet.create({
     wrapper: {
-        marginBottom: 10
+        marginVertical: 10,
     },
     image: {
         width: '100%',
         height: 400,
-        marginTop: 10
+        marginTop: 10,
+        borderWidth: 1,
+        borderRadius: 16, 
+        borderColor: APP_COLORS.ORANGE,
+        overflow: 'hidden'
     },
     button: {
         padding: 10

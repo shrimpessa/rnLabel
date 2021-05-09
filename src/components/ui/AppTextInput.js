@@ -25,6 +25,6 @@ const styles = StyleSheet.create({
         fontSize: 14,
         borderBottomWidth: 1.4,
         padding: 10,
-        borderBottomColor: APP_COLORS.CYPRUS
+        borderBottomColor: APP_COLORS.BROWN
     }
 })

@@ -144,21 +144,17 @@ export const PostScreen = ({ navigation }) => {
         let uniqueArray = array.filter(function(item, pos) {
             return array.indexOf(item) == pos
         })
-        console.log(uniqueArray)
         return uniqueArray
     }
 
     const getCareSignPicture = () => {
         let arrayOfCareSignsIDs = parseCareSignsString()
-        
         let pictureSet = []
-
         allCareSigns.map(item => {
             arrayOfCareSignsIDs.map(s =>
                 { if (item.id == s) {pictureSet.push(item.img)} }
             )
-        })
-        
+        })        
         return (
             pictureSet.map(i => {
                 return <ImageBackground key={i + 10} style={{width: 60, height: 60}} source={{ uri: i }} />
@@ -243,7 +239,7 @@ export const PostScreen = ({ navigation }) => {
             <View>
                 <View style={{flexDirection: 'row'}}>
                     <AppText style={styles.titles}>Знаки по уходу</AppText>                    
-                </View>            
+                </View>
                 <View style={{padding: 10, display: 'flex', flexWrap: 'wrap', flexDirection: 'row'}}>
                     {getCareSignPicture()}
                 </View>
@@ -264,7 +260,7 @@ export const PostScreen = ({ navigation }) => {
                     Удалить
                 </AppButton>
             </View>
-            
+            <View style={{paddingTop: 80}} />
         </ScrollView>
     )
 }
