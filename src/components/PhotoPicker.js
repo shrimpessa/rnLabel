@@ -50,7 +50,8 @@ export const PhotoPicker = ({ onPick }) => {
 
 const styles = StyleSheet.create({
     wrapper: {
-        marginVertical: 10,
+        marginVertical: 4,
+        marginHorizontal: 10
     },
     image: {
         width: '100%',
@@ -60,8 +61,5 @@ const styles = StyleSheet.create({
         borderRadius: 16, 
         borderColor: APP_COLORS.ORANGE,
         overflow: 'hidden'
-    },
-    button: {
-        padding: 10
     }
 })
