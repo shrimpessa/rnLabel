@@ -7,8 +7,7 @@ import {
   Keyboard,
   Button,
   Platform,
-  Text, 
-  TouchableOpacity
+  Text
 } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { useDispatch, useSelector } from 'react-redux';
@@ -35,14 +34,23 @@ export const CreateScreen = ({ navigation }) => {
   const [category, setCategory] = useState('')
   const [price, setPrice] = useState()
   const [currency, setCurrency] = useState('ruble')
-  const [season, setSeason] = useState('autumnSpring')
+  const [season, setSeason] = useState('autumnSpring')  
   
-  const [it, setIt] = useState('')
-  const [eu, setEu] = useState('')
-  const [es, setEs] = useState('')
   const [fr, setFr] = useState('')
   const [uk, setUk] = useState('')
   const [usa, setUsa] = useState('')
+
+  const [us, setUs] = useState('')
+  const [jp, setJp] = useState('')
+  const [chn, setChn] = useState('')
+
+  const [ru, setRu] = useState('')
+
+  const [universalSize, setUniversalSize] = useState('')
+
+  const [it, setIt] = useState('')
+  const [eu, setEu] = useState('')
+  const [es, setEs] = useState('')
   
   const [caresigns, setCaresigns] = useState('')
   const [notes, setNotes] = useState('')
@@ -88,6 +96,328 @@ export const CreateScreen = ({ navigation }) => {
   const defineRenderPart = value => {
     setCategory(value)
   }
+
+  const getSaveButton = () => {
+    return <Button
+      style={styles.createButton}
+      title="Сохранить вещь" 
+      color={APP_COLORS.ORANGE} 
+      onPress={saveHandler}
+      disabled={!text && !imgRef.current}
+    />
+  }
+
+  const getTitleInput = () => {
+    return (
+      <View>
+        <View style={{flexDirection: 'row'}}>
+            <AppText style={styles.titles}>Название</AppText>          
+        </View>
+        <AppTextInput 
+            style={styles.textInputArea}
+            placeholder="Название ващей вещи"
+            value={text}
+            onChangeText={setText}
+        />
+      </View>
+    )
+  }
+
+  const getPhotoPickerButton = () => {
+    return (
+      <View>
+        <View style={{flexDirection: 'row'}}>
+              <AppText style={styles.titles}>Фотография</AppText>          
+          </View>
+        <PhotoPicker onPick={photoPickHandler} />
+      </View> 
+    )
+  }
+
+  const getSeasonSelectionBlock = () => {
+    return (
+      <View>
+          <View style={{flexDirection: 'row'}}>
+              <AppText style={styles.titles}>Сезонность</AppText>          
+          </View>
+          <View style={{flexDirection: 'row', justifyContent: 'space-between', marginVertical: 10, marginHorizontal: 10}}>          
+              <RadioButton.Group onValueChange={newValue => setSeason(newValue)} value={season}>
+                <View style={{flexDirection: 'row'}}>          
+                  <RadioButton value="summer" status={season === 'summer' ? 'checked' : 'unchecked' } />
+                  <Text style={styles.radioButtonText}>Лето</Text>
+                </View>
+                <View style={{flexDirection: 'row'}}>          
+                  <RadioButton value="autumnSpring" status={season === 'autumnSpring' ? 'checked' : 'unchecked' } />
+                  <Text style={styles.radioButtonText}>Осень/весна</Text>
+                </View>
+                <View style={{flexDirection: 'row'}}>          
+                  <RadioButton value="winter" status={season === 'winter' ? 'checked' : 'unchecked' } />
+                  <Text style={styles.radioButtonText}>Зима</Text>
+                </View>
+              </RadioButton.Group>
+          </View>
+      </View>
+    )
+  }
+
+  const getPriceBlock = () => {
+    return (
+      <View>
+        <View style={{flexDirection: 'row'}}>
+          <AppText style={styles.titles}>Цена</AppText>                    
+        </View>
+        <View style={styles.elementsNearbyContainer}> 
+          <AppTextInput
+            style={{ width: '50%' }}
+            placeholder="Цена"
+            placeholderTextColor={APP_COLORS.LIGHT_GREY}
+            autoCorrect={false} 
+            value={price}
+            onChangeText={setPrice}
+            keyboardType='numeric'
+          />
+          <Picker
+            style={{ width: '50%', height: Platform.OS === 'android' ? 100 : '100%', margin: -10}}
+            itemStyle={{ fontSize: 16, color: APP_COLORS.BROWN }}
+            selectedValue={currency}
+            onValueChange={(itemValue) => setCurrency(itemValue)}
+          >
+            <Picker.Item label="RUB ₽" value="ruble" />
+            <Picker.Item label="UAH ₴" value="hryvnia" />
+            <Picker.Item label="USD $" value="dollar" />
+            <Picker.Item label="EUR €" value="euro" />
+            <Picker.Item label="GBP £" value="poundsterling" />
+            <Picker.Item label="JPY ¥" value="yen" />
+            <Picker.Item label="CNY ¥" value="yuan" />
+            <Picker.Item label="KRW ₩" value="won" />
+          </Picker>
+        </View>
+      </View>
+    )
+  }
+
+  const getCareSignsBlock = () => {
+    return (
+      <View>
+          <View style={{flexDirection: 'row'}}>
+              <AppText style={styles.titles}>Знаки по уходу</AppText>                    
+          </View>
+          <CareSignsList style={{flexDirection: 'row'}} data={allCareSigns} onCareSignPress={onCareSignPress} />
+      </View>
+    )
+  }
+
+  const getNotesBlock = () => {
+    return(
+      <View>
+        <View style={{flexDirection: 'row'}}>
+            <AppText style={styles.titles}>Заметки</AppText>
+        </View>
+        <AppMultilineTextInput 
+          style={styles.multilineTextInput}
+          placeholder="Здесь можно сохранить дополнительную информацию о вашей вещи."
+          value={notes}
+          onChangeText={setNotes}
+        />
+      </View>
+    )
+  }
+
+  const getUnderwearSizesPack = () => {
+    return(
+      <View style={styles.underwearContainer}>
+        <View style={{flexDirection: 'row'}}>
+            <AppText style={styles.titles}>Размеры</AppText>
+        </View>
+        <View style={styles.underwearLineBlock}>
+            <View style={styles.sizeBlock}>
+              <View style={styles.countryCodeBlock} >
+                <AppText style={styles.countryCodeTitle}>IT</AppText>
+              </View>
+              <AppTextInput 
+                style={styles.input} 
+                placeholder="2C"
+                placeholderTextColor={APP_COLORS.LIGHT_GREY}
+                maxLength={6}
+                autoCorrect={false} 
+                value={it}
+                onChangeText={setIt}
+              />
+            </View> 
+            <View style={styles.sizeBlock}>
+              <View style={styles.countryCodeBlock} >
+                <AppText style={styles.countryCodeTitle}>EU</AppText>
+              </View>
+              <AppTextInput 
+                style={styles.input} 
+                placeholder="75C"
+                placeholderTextColor={APP_COLORS.LIGHT_GREY}
+                maxLength={6}
+                autoCorrect={false} 
+                value={eu}
+                onChangeText={setEu}
+              />
+            </View>
+            <View style={styles.sizeBlock}>
+              <View style={styles.countryCodeBlock} >
+                <AppText style={styles.countryCodeTitle}>ES</AppText>
+              </View>
+              <AppTextInput 
+                style={styles.input} 
+                placeholder="85C"
+                placeholderTextColor={APP_COLORS.LIGHT_GREY}
+                maxLength={6}
+                autoCorrect={false} 
+                value={es}
+                onChangeText={setEs}
+              />
+            </View>
+        </View> 
+        <View style={styles.underwearLineBlock}>
+            <View style={styles.sizeBlock}>
+              <View style={styles.countryCodeBlock} >
+                <AppText style={styles.countryCodeTitle}>FR</AppText>
+              </View>
+              <AppTextInput 
+                style={styles.input} 
+                placeholder="85C"
+                placeholderTextColor={APP_COLORS.LIGHT_GREY}
+                maxLength={6}
+                autoCorrect={false} 
+                value={fr}
+                onChangeText={setFr}
+              />
+            </View>
+            <View style={styles.sizeBlock}>
+              <View style={styles.countryCodeBlock} >
+                <AppText style={styles.countryCodeTitle}>UK</AppText>
+              </View>
+              <AppTextInput
+                style={styles.input} 
+                placeholder="34C"
+                placeholderTextColor={APP_COLORS.LIGHT_GREY}
+                maxLength={6}
+                autoCorrect={false} 
+                value={uk}
+                onChangeText={setUk}
+              />
+            </View>
+            <View style={styles.sizeBlock}>
+              <View style={styles.countryCodeBlock} >
+                <AppText style={styles.countryCodeTitle}>USA</AppText>
+              </View>
+              <AppTextInput 
+                style={styles.input} 
+                placeholder="34C"
+                placeholderTextColor={APP_COLORS.LIGHT_GREY}
+                maxLength={6}
+                autoCorrect={false} 
+                value={usa}
+                onChangeText={setUsa}
+              />
+            </View>  
+        </View>     
+      </View>
+    )
+  }
+
+  const getTopBottomAndShoesSizesPack = () => {
+    return(
+      <View style={styles.underwearContainer}>
+        <View style={{flexDirection: 'row'}}>
+            <AppText style={styles.titles}>Размеры</AppText>
+        </View>
+        <View style={styles.underwearLineBlock}>
+            <View style={styles.sizeBlock}>
+              <View style={styles.countryCodeBlock} >
+                <AppText style={styles.countryCodeTitle}>US</AppText>
+              </View>
+              <AppTextInput 
+                style={styles.input} 
+                placeholder="8 1/2"
+                placeholderTextColor={APP_COLORS.LIGHT_GREY}
+                maxLength={6}
+                autoCorrect={false} 
+                value={us}
+                onChangeText={setUs}
+              />
+            </View> 
+            <View style={styles.sizeBlock}>
+              <View style={styles.countryCodeBlock} >
+                <AppText style={styles.countryCodeTitle}>UK</AppText>
+              </View>
+              <AppTextInput 
+                style={styles.input} 
+                placeholder="8"
+                placeholderTextColor={APP_COLORS.LIGHT_GREY}
+                maxLength={6}
+                autoCorrect={false} 
+                value={uk}
+                onChangeText={setUk}
+              />
+            </View>
+            <View style={styles.sizeBlock}>
+              <View style={styles.countryCodeBlock} >
+                <AppText style={styles.countryCodeTitle}>FR</AppText>
+              </View>
+              <AppTextInput 
+                style={styles.input} 
+                placeholder="42"
+                placeholderTextColor={APP_COLORS.LIGHT_GREY}
+                maxLength={6}
+                autoCorrect={false} 
+                value={fr}
+                onChangeText={setFr}
+              />
+            </View>
+        </View> 
+        <View style={styles.underwearLineBlock}>
+            <View style={styles.sizeBlock}>
+              <View style={styles.countryCodeBlock} >
+                <AppText style={styles.countryCodeTitle}>RU</AppText>
+              </View>
+              <AppTextInput 
+                style={styles.input} 
+                placeholder="S"
+                placeholderTextColor={APP_COLORS.LIGHT_GREY}
+                maxLength={6}
+                autoCorrect={false} 
+                value={ru}
+                onChangeText={setRu}
+              />
+            </View>
+            <View style={styles.sizeBlock}>
+              <View style={styles.countryCodeBlock} >
+                <AppText style={styles.countryCodeTitle}>JP</AppText>
+              </View>
+              <AppTextInput 
+                style={styles.input} 
+                placeholder="265"
+                placeholderTextColor={APP_COLORS.LIGHT_GREY}
+                maxLength={6}
+                autoCorrect={false} 
+                value={jp}
+                onChangeText={setJp}
+              />
+            </View>
+            <View style={styles.sizeBlock}>
+              <View style={styles.countryCodeBlock} >
+                <AppText style={styles.countryCodeTitle}>CHN</AppText>
+              </View>
+              <AppTextInput
+                style={styles.input} 
+                placeholder="260"
+                placeholderTextColor={APP_COLORS.LIGHT_GREY}
+                maxLength={6}
+                autoCorrect={false} 
+                value={chn}
+                onChangeText={setChn}
+              />
+            </View>
+        </View>     
+      </View>
+    )
+  }
   
   const onCareSignPress = (careSignId, isCareSignSelected) => {
     let careSignsString = ''
@@ -100,402 +430,37 @@ export const CreateScreen = ({ navigation }) => {
     }
   }
 
-  const Wrapper = Platform.OS === 'android' ? TouchableNativeFeedback : TouchableOpacity
+  let clearScreenPart = (<View style={{height: 500}} />)  
 
-  let clearScreenPart = (<View style={{height: 500}} />)
-
-  // НАЧАЛО - Нижнее белье
+  // Нижнее белье
   let underwearScreenPart = (
     <View>
-      <View>
-        <View style={{flexDirection: 'row'}}>
-            <AppText style={styles.titles}>Название</AppText>          
-        </View>
-        <AppTextInput 
-            style={styles.textInputArea}
-            placeholder="Название ващей вещи"
-            value={text}
-            onChangeText={setText}
-        />
-      </View>
-
-      <View>
-        <View style={{flexDirection: 'row'}}>
-              <AppText style={styles.titles}>Фотография</AppText>          
-          </View>
-        <PhotoPicker onPick={photoPickHandler} />
-      </View>   
-
-      <View>
-          <View style={{flexDirection: 'row'}}>
-              <AppText style={styles.titles}>Сезонность</AppText>          
-          </View>
-          <View style={{flexDirection: 'row', justifyContent: 'space-between', marginVertical: 10, marginHorizontal: 10}}>          
-              <RadioButton.Group onValueChange={newValue => setSeason(newValue)} value={season}>
-                <View style={{flexDirection: 'row'}}>          
-                  <RadioButton value="summer" status={season === 'summer' ? 'checked' : 'unchecked' } />
-                  <Text style={styles.radioButtonText}>Лето</Text>
-                </View>
-                <View style={{flexDirection: 'row'}}>          
-                  <RadioButton value="autumnSpring" status={season === 'autumnSpring' ? 'checked' : 'unchecked' } />
-                  <Text style={styles.radioButtonText}>Осень/весна</Text>
-                </View>
-                <View style={{flexDirection: 'row'}}>          
-                  <RadioButton value="winter" status={season === 'winter' ? 'checked' : 'unchecked' } />
-                  <Text style={styles.radioButtonText}>Зима</Text>
-                </View>
-              </RadioButton.Group>
-          </View>
-      </View>      
-
-      <View style={styles.underwearContainer}>
-        <View style={{flexDirection: 'row'}}>
-            <AppText style={styles.titles}>Размеры</AppText>
-        </View>
-        <View style={styles.underwearLineBlock}>
-            <View style={styles.sizeBlock}>
-              <View style={styles.countryCodeBlock} >
-                <AppText style={styles.countryCodeTitle}>IT</AppText>
-              </View>
-              <AppTextInput 
-                style={styles.input} 
-                placeholder="2C"
-                placeholderTextColor={APP_COLORS.LIGHT_GREY}
-                maxLength={3}
-                autoCorrect={false} 
-                value={it}
-                onChangeText={setIt}
-              />
-            </View> 
-            <View style={styles.sizeBlock}>
-              <View style={styles.countryCodeBlock} >
-                <AppText style={styles.countryCodeTitle}>EU</AppText>
-              </View>
-              <AppTextInput 
-                style={styles.input} 
-                placeholder="75C"
-                placeholderTextColor={APP_COLORS.LIGHT_GREY}
-                maxLength={3}
-                autoCorrect={false} 
-                value={eu}
-                onChangeText={setEu}
-              />
-            </View>
-            <View style={styles.sizeBlock}>
-              <View style={styles.countryCodeBlock} >
-                <AppText style={styles.countryCodeTitle}>ES</AppText>
-              </View>
-              <AppTextInput 
-                style={styles.input} 
-                placeholder="85C"
-                placeholderTextColor={APP_COLORS.LIGHT_GREY}
-                maxLength={3}
-                autoCorrect={false} 
-                value={es}
-                onChangeText={setEs}
-              />
-            </View>
-        </View> 
-        <View style={styles.underwearLineBlock}>
-            <View style={styles.sizeBlock}>
-              <View style={styles.countryCodeBlock} >
-                <AppText style={styles.countryCodeTitle}>FR</AppText>
-              </View>
-              <AppTextInput 
-                style={styles.input} 
-                placeholder="85C"
-                placeholderTextColor={APP_COLORS.LIGHT_GREY}
-                maxLength={3}
-                autoCorrect={false} 
-                value={fr}
-                onChangeText={setFr}
-              />
-            </View>
-            <View style={styles.sizeBlock}>
-              <View style={styles.countryCodeBlock} >
-                <AppText style={styles.countryCodeTitle}>UK</AppText>
-              </View>
-              <AppTextInput
-                style={styles.input} 
-                placeholder="34C"
-                placeholderTextColor={APP_COLORS.LIGHT_GREY}
-                maxLength={3}
-                autoCorrect={false} 
-                value={uk}
-                onChangeText={setUk}
-              />
-            </View>
-            <View style={styles.sizeBlock}>
-              <View style={styles.countryCodeBlock} >
-                <AppText style={styles.countryCodeTitle}>USA</AppText>
-              </View>
-              <AppTextInput 
-                style={styles.input} 
-                placeholder="34C"
-                placeholderTextColor={APP_COLORS.LIGHT_GREY}
-                maxLength={3}
-                autoCorrect={false} 
-                value={usa}
-                onChangeText={setUsa}
-              />
-            </View>  
-        </View>     
-      </View>
-
-      <View style={{flexDirection: 'row'}}>
-          <AppText style={styles.titles}>Цена</AppText>                    
-      </View>
-      <View style={styles.elementsNearbyContainer}> 
-        <AppTextInput
-          style={{ width: '50%' }}
-          placeholder="Цена"
-          placeholderTextColor={APP_COLORS.LIGHT_GREY}
-          autoCorrect={false} 
-          value={price}
-          onChangeText={setPrice}
-          keyboardType='numeric'
-        />
-        <Picker
-          style={{ width: '50%', height: Platform.OS === 'android' ? 100 : '100%', margin: -10}}
-          itemStyle={{ fontSize: 16, color: APP_COLORS.BROWN }}
-          selectedValue={currency}
-          onValueChange={(itemValue) => setCurrency(itemValue)}
-        >
-          <Picker.Item label="RUB ₽" value="ruble" />
-          <Picker.Item label="UAH ₴" value="hryvnia" />
-          <Picker.Item label="USD $" value="dollar" />
-          <Picker.Item label="EUR €" value="euro" />
-          <Picker.Item label="GBP £" value="poundsterling" />
-          <Picker.Item label="JPY ¥" value="yen" />
-          <Picker.Item label="CNY ¥" value="yuan" />
-          <Picker.Item label="KRW ₩" value="won" />
-        </Picker>
-      </View>
-
-      <View>
-          <View style={{flexDirection: 'row'}}>
-              <AppText style={styles.titles}>Знаки по уходу</AppText>                    
-          </View>
-          <CareSignsList style={{flexDirection: 'row'}} data={allCareSigns} onCareSignPress={onCareSignPress} />
-      </View>
-    
-      <View style={{flexDirection: 'row'}}>
-          <AppText style={styles.titles}>Заметки</AppText>
-      </View>
-      <AppMultilineTextInput 
-        style={styles.multilineTextInput}
-        placeholder="Здесь можно сохранить дополнительную информацию о вашей вещи."
-        value={notes}
-        onChangeText={setNotes}
-      />
-    
-      <Button
-        style={styles.createButton}
-        title="Сохранить вещь" 
-        color={APP_COLORS.ORANGE} 
-        onPress={saveHandler}
-        disabled={!text && !imgRef.current}
-      />
+      {getTitleInput()}
+      {getPhotoPickerButton()}
+      {getSeasonSelectionBlock()}
+      {getUnderwearSizesPack()}
+      {getPriceBlock()}
+      {getCareSignsBlock()}    
+      {getNotesBlock()}
+      {getSaveButton()}
       <View style={{paddingTop: 80}} />    
     </View>
   )
-  // КОНЕЦ - Нижнее белье
-  // НАЧАЛО - «Верх и платья», «Низ» и «Обувь»
+
+  // «Верх и платья», «Низ» или «Обувь»
   let topBottomAndShoes = (
     <View>
-      <View>
-        <View style={{flexDirection: 'row'}}>
-            <AppText style={styles.titles}>Название!</AppText>          
-        </View>
-        <AppTextInput 
-            style={styles.textInputArea}
-            placeholder="Название ващей вещи"
-            value={text}
-            onChangeText={setText}
-        />
-      </View>
-
-      <View>
-        <View style={{flexDirection: 'row'}}>
-              <AppText style={styles.titles}>Фотография</AppText>          
-          </View>
-        <PhotoPicker onPick={photoPickHandler} />
-      </View>   
-
-      <View>
-          <View style={{flexDirection: 'row'}}>
-              <AppText style={styles.titles}>Сезонность</AppText>          
-          </View>
-          <View style={{flexDirection: 'row', justifyContent: 'space-between', marginVertical: 10, marginHorizontal: 10}}>          
-              <RadioButton.Group onValueChange={newValue => setSeason(newValue)} value={season}>
-                <View style={{flexDirection: 'row'}}>          
-                  <RadioButton value="summer" status={season === 'summer' ? 'checked' : 'unchecked' } />
-                  <Text style={styles.radioButtonText}>Лето</Text>
-                </View>
-                <View style={{flexDirection: 'row'}}>          
-                  <RadioButton value="autumnSpring" status={season === 'autumnSpring' ? 'checked' : 'unchecked' } />
-                  <Text style={styles.radioButtonText}>Осень/весна</Text>
-                </View>
-                <View style={{flexDirection: 'row'}}>          
-                  <RadioButton value="winter" status={season === 'winter' ? 'checked' : 'unchecked' } />
-                  <Text style={styles.radioButtonText}>Зима</Text>
-                </View>
-              </RadioButton.Group>
-          </View>
-      </View>      
-
-      <View style={styles.underwearContainer}>
-        <View style={{flexDirection: 'row'}}>
-            <AppText style={styles.titles}>Размеры</AppText>
-        </View>
-        <View style={styles.underwearLineBlock}>
-            <View style={styles.sizeBlock}>
-              <View style={styles.countryCodeBlock} >
-                <AppText style={styles.countryCodeTitle}>IT</AppText>
-              </View>
-              <AppTextInput 
-                style={styles.input} 
-                placeholder="2C"
-                placeholderTextColor={APP_COLORS.LIGHT_GREY}
-                maxLength={3}
-                autoCorrect={false} 
-                value={it}
-                onChangeText={setIt}
-              />
-            </View> 
-            <View style={styles.sizeBlock}>
-              <View style={styles.countryCodeBlock} >
-                <AppText style={styles.countryCodeTitle}>EU</AppText>
-              </View>
-              <AppTextInput 
-                style={styles.input} 
-                placeholder="75C"
-                placeholderTextColor={APP_COLORS.LIGHT_GREY}
-                maxLength={3}
-                autoCorrect={false} 
-                value={eu}
-                onChangeText={setEu}
-              />
-            </View>
-            <View style={styles.sizeBlock}>
-              <View style={styles.countryCodeBlock} >
-                <AppText style={styles.countryCodeTitle}>ES</AppText>
-              </View>
-              <AppTextInput 
-                style={styles.input} 
-                placeholder="85C"
-                placeholderTextColor={APP_COLORS.LIGHT_GREY}
-                maxLength={3}
-                autoCorrect={false} 
-                value={es}
-                onChangeText={setEs}
-              />
-            </View>
-        </View> 
-        <View style={styles.underwearLineBlock}>
-            <View style={styles.sizeBlock}>
-              <View style={styles.countryCodeBlock} >
-                <AppText style={styles.countryCodeTitle}>FR</AppText>
-              </View>
-              <AppTextInput 
-                style={styles.input} 
-                placeholder="85C"
-                placeholderTextColor={APP_COLORS.LIGHT_GREY}
-                maxLength={3}
-                autoCorrect={false} 
-                value={fr}
-                onChangeText={setFr}
-              />
-            </View>
-            <View style={styles.sizeBlock}>
-              <View style={styles.countryCodeBlock} >
-                <AppText style={styles.countryCodeTitle}>UK</AppText>
-              </View>
-              <AppTextInput
-                style={styles.input} 
-                placeholder="34C"
-                placeholderTextColor={APP_COLORS.LIGHT_GREY}
-                maxLength={3}
-                autoCorrect={false} 
-                value={uk}
-                onChangeText={setUk}
-              />
-            </View>
-            <View style={styles.sizeBlock}>
-              <View style={styles.countryCodeBlock} >
-                <AppText style={styles.countryCodeTitle}>USA</AppText>
-              </View>
-              <AppTextInput 
-                style={styles.input} 
-                placeholder="34C"
-                placeholderTextColor={APP_COLORS.LIGHT_GREY}
-                maxLength={3}
-                autoCorrect={false} 
-                value={usa}
-                onChangeText={setUsa}
-              />
-            </View>  
-        </View>     
-      </View>
-
-      <View style={{flexDirection: 'row'}}>
-          <AppText style={styles.titles}>Цена</AppText>                    
-      </View>
-      <View style={styles.elementsNearbyContainer}> 
-        <AppTextInput
-          style={{ width: '50%' }}
-          placeholder="Цена"
-          placeholderTextColor={APP_COLORS.LIGHT_GREY}
-          autoCorrect={false} 
-          value={price}
-          onChangeText={setPrice}
-          keyboardType='numeric'
-        />
-        <Picker
-          style={{ width: '50%', height: Platform.OS === 'android' ? 100 : '100%', margin: -10}}
-          itemStyle={{ fontSize: 16, color: APP_COLORS.BROWN }}
-          selectedValue={currency}
-          onValueChange={(itemValue) => setCurrency(itemValue)}
-        >
-          <Picker.Item label="RUB ₽" value="ruble" />
-          <Picker.Item label="UAH ₴" value="hryvnia" />
-          <Picker.Item label="USD $" value="dollar" />
-          <Picker.Item label="EUR €" value="euro" />
-          <Picker.Item label="GBP £" value="poundsterling" />
-          <Picker.Item label="JPY ¥" value="yen" />
-          <Picker.Item label="CNY ¥" value="yuan" />
-          <Picker.Item label="KRW ₩" value="won" />
-        </Picker>
-      </View>
-
-      <View>
-          <View style={{flexDirection: 'row'}}>
-              <AppText style={styles.titles}>Знаки по уходу</AppText>                    
-          </View>
-          <CareSignsList style={{flexDirection: 'row'}} data={allCareSigns} onCareSignPress={onCareSignPress} />
-      </View>
-    
-      <View style={{flexDirection: 'row'}}>
-          <AppText style={styles.titles}>Заметки</AppText>
-      </View>
-      <AppMultilineTextInput 
-        style={styles.multilineTextInput}
-        placeholder="Здесь можно сохранить дополнительную информацию о вашей вещи."
-        value={notes}
-        onChangeText={setNotes}
-      />
-    
-      <Button
-        style={styles.createButton}
-        title="Сохранить вещь" 
-        color={APP_COLORS.ORANGE} 
-        onPress={saveHandler}
-        disabled={!text && !imgRef.current}
-      />
+      {getTitleInput()}
+      {getPhotoPickerButton()}
+      {getSeasonSelectionBlock()}
+      {getTopBottomAndShoesSizesPack()}
+      {getPriceBlock()}
+      {getCareSignsBlock()}
+      {getNotesBlock()}
+      {getSaveButton()}
       <View style={{paddingTop: 80}} />    
     </View>
   )
-  // КОНЕЦ - «Верх и платья», «Низ» и «Обувь»
 
   const renderPartChoice = () => {
     switch(category) {     
@@ -597,7 +562,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 16,
     padding: 10,
-    borderColor: APP_COLORS.BROWN
+    borderColor: APP_COLORS.BROWN,
+    marginBottom: 16
   },
   // underwear
   underwearContainer: {
@@ -650,6 +616,6 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     paddingHorizontal: 10,
     color: APP_COLORS.BROWN,
-    marginTop: '6%' 
+    marginTop: Platform.OS == 'android' ? '5.4%' : '6%'
   },
 })
