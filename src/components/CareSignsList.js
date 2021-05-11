@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, FlatList, StyleSheet } from 'react-native'
+import { View, FlatList, StyleSheet, Platform } from 'react-native'
 import { CareSign } from './CareSign'
 
 export const CareSignsList = ({ data, onCareSignPress }) => {
@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     row: {
       flex: 1,
       justifyContent: "space-between",
-      paddingRight: 15,
+      paddingRight: Platform.OS === 'android' ? 55 : 15,
       paddingLeft: 5
     }
   })
