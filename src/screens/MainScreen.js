@@ -50,7 +50,7 @@ MainScreen.navigationOptions = ({ navigation }) => ({
       <HeaderButtons HeaderButtonComponent={AppHeaderIcon}>
         <Item
           title='Take photo'
-          iconName='ios-camera'
+          iconName='ios-add-circle-outline'
           // перейти на страницу Create
           onPress={() => navigation.push('Create')}
         />
