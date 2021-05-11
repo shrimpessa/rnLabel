@@ -9,9 +9,6 @@ import {
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
-import { FontAwesome5 } from '@expo/vector-icons'; 
-import { Feather } from '@expo/vector-icons'; 
-import { Entypo } from '@expo/vector-icons'; 
 import { AntDesign } from '@expo/vector-icons'; 
 
 import { AppText } from '../components/ui/AppText';
@@ -20,6 +17,7 @@ import { APP_COLORS } from '../enums/APP_COLORS';
 import { AppHeaderIcon } from '../components/ui/AppHeaderIcon';
 import { removePost, toogleBooked } from '../store/actions/postActions';
 import { loadCareSigns } from '../store/actions/careSignsAction';
+import { seasonHandler } from '../components/seasonHandler'
 
 export const PostScreen = ({ navigation }) => {
 
@@ -99,19 +97,6 @@ export const PostScreen = ({ navigation }) => {
         }
     }
 
-    const seasonHandler = () => {
-        switch(post.season) {     
-            case "summer":
-              return <Feather style={{paddingRight: 10}} name="sun" size={24} color={APP_COLORS.YELLOW} />;
-            case "autumnSpring":
-              return <Entypo style={{paddingRight: 10}} name="leaf" size={24} color={APP_COLORS.ORANGE} />;
-            case "winter":
-              return <FontAwesome5 style={{paddingRight: 10}} name="snowflake" size={24} color={APP_COLORS.MERMAID_BLUE} />;
-            default:
-              return <FontAwesome5 style={{paddingRight: 10}} name="snowflake" size={24} color={APP_COLORS.MERMAID_BLUE} />;
-        }
-    }
-
     const checkingStringForEmptiness = (string) => {
         let thisString
         string.trim() == ''
@@ -172,7 +157,7 @@ export const PostScreen = ({ navigation }) => {
             <ImageBackground style={styles.image} source={{uri: post.img}}>
                 <View style={styles.headerTextWrap}>
                     <View style={{flexDirection: 'row'}}>
-                        {seasonHandler()}
+                        {seasonHandler(post.season)}
                         <AppText style={styles.upText}>{post.text}</AppText>
                     </View>                    
                     <AppText style={styles.upText}>{new Date(post.date).toLocaleDateString()}</AppText>
