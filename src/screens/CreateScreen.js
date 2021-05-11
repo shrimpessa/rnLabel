@@ -143,15 +143,15 @@ export const CreateScreen = ({ navigation }) => {
           <View style={{flexDirection: 'row', justifyContent: 'space-between', marginVertical: 10, marginHorizontal: 10}}>          
               <RadioButton.Group onValueChange={newValue => setSeason(newValue)} value={season}>
                 <View style={{flexDirection: 'row'}}>          
-                  <RadioButton value="summer" status={season === 'summer' ? 'checked' : 'unchecked' } />
+                  <RadioButton color= {APP_COLORS.ORANGE} value="summer" status={season === 'summer' ? 'checked' : 'unchecked' } />
                   <Text style={styles.radioButtonText}>Лето</Text>
                 </View>
                 <View style={{flexDirection: 'row'}}>          
-                  <RadioButton value="autumnSpring" status={season === 'autumnSpring' ? 'checked' : 'unchecked' } />
+                  <RadioButton color= {APP_COLORS.ORANGE} value="autumnSpring" status={season === 'autumnSpring' ? 'checked' : 'unchecked' } />
                   <Text style={styles.radioButtonText}>Осень/весна</Text>
                 </View>
                 <View style={{flexDirection: 'row'}}>          
-                  <RadioButton value="winter" status={season === 'winter' ? 'checked' : 'unchecked' } />
+                  <RadioButton color= {APP_COLORS.ORANGE} value="winter" status={season === 'winter' ? 'checked' : 'unchecked' } />
                   <Text style={styles.radioButtonText}>Зима</Text>
                 </View>
               </RadioButton.Group>
@@ -374,16 +374,16 @@ export const CreateScreen = ({ navigation }) => {
         <View style={styles.underwearLineBlock}>
             <View style={styles.sizeBlock}>
               <View style={styles.countryCodeBlock} >
-                <AppText style={styles.countryCodeTitle}>RU</AppText>
+                <AppText style={styles.countryCodeTitle}>INT</AppText>
               </View>
               <AppTextInput 
                 style={styles.input} 
                 placeholder="S"
                 placeholderTextColor={APP_COLORS.LIGHT_GREY}
-                maxLength={6}
+                maxLength={2}
                 autoCorrect={false} 
-                value={ru}
-                onChangeText={setRu}
+                value={universalSize}
+                onChangeText={setUniversalSize}
               />
             </View>
             <View style={styles.sizeBlock}>
@@ -418,6 +418,102 @@ export const CreateScreen = ({ navigation }) => {
       </View>
     )
   }
+
+  const getOutwearSizesPack = () => {
+    return(
+      <View style={styles.underwearContainer}>
+        <View style={{flexDirection: 'row'}}>
+            <AppText style={styles.titles}>Размеры</AppText>
+        </View>
+        <View style={styles.underwearLineBlock}>            
+            <View style={styles.sizeBlockForTwoElements}>
+              <View style={styles.countryCodeBlock} >
+                <AppText style={styles.countryCodeTitle}>RU</AppText>
+              </View>
+              <AppTextInput 
+                style={styles.input} 
+                placeholder="164-80-88"
+                placeholderTextColor={APP_COLORS.LIGHT_GREY}
+                maxLength={14}
+                autoCorrect={false} 
+                value={ru}
+                onChangeText={setRu}
+              />
+            </View>        
+        </View>
+        <View style={styles.underwearLineBlock}>
+            <View style={styles.sizeBlock}>
+              <View style={styles.countryCodeBlock} >
+                <AppText style={styles.countryCodeTitle}>US</AppText>
+              </View>
+              <AppTextInput 
+                style={styles.input} 
+                placeholder="6,8"
+                placeholderTextColor={APP_COLORS.LIGHT_GREY}
+                maxLength={6}
+                autoCorrect={false} 
+                value={us}
+                onChangeText={setUs}
+              />
+            </View> 
+            <View style={styles.sizeBlock}>
+              <View style={styles.countryCodeBlock} >
+                <AppText style={styles.countryCodeTitle}>INT</AppText>
+              </View>
+              <AppTextInput 
+                style={styles.input} 
+                placeholder="S"
+                placeholderTextColor={APP_COLORS.LIGHT_GREY}
+                maxLength={2}
+                autoCorrect={false} 
+                value={universalSize}
+                onChangeText={setUniversalSize}
+              />
+            </View> 
+        </View>
+      </View>
+    )
+  }
+
+  const getAccessoriesSizesPack = () => {
+    return(
+      <View style={styles.underwearContainer}>
+        <View style={{flexDirection: 'row'}}>
+            <AppText style={styles.titles}>Размеры</AppText>
+        </View>
+        <View style={styles.underwearLineBlock}>            
+            <View style={styles.sizeBlockForTwoElements}>
+              <View style={styles.countryCodeBlock} >
+                <AppText style={styles.countryCodeTitle}>RU</AppText>
+              </View>
+              <AppTextInput 
+                style={styles.input} 
+                placeholder="7"
+                placeholderTextColor={APP_COLORS.LIGHT_GREY}
+                maxLength={6}
+                autoCorrect={false} 
+                value={ru}
+                onChangeText={setRu}
+              />
+            </View>
+            <View style={styles.sizeBlockForTwoElements}>
+              <View style={styles.countryCodeBlock} >
+                <AppText style={styles.countryCodeTitle}>INT</AppText>
+              </View>
+              <AppTextInput 
+                style={styles.input} 
+                placeholder="S"
+                placeholderTextColor={APP_COLORS.LIGHT_GREY}
+                maxLength={2}
+                autoCorrect={false} 
+                value={universalSize}
+                onChangeText={setUniversalSize}
+              />
+            </View> 
+        </View>
+      </View>
+    )
+  }
   
   const onCareSignPress = (careSignId, isCareSignSelected) => {
     let careSignsString = ''
@@ -446,9 +542,8 @@ export const CreateScreen = ({ navigation }) => {
       <View style={{paddingTop: 80}} />    
     </View>
   )
-
   // «Верх и платья», «Низ» или «Обувь»
-  let topBottomAndShoes = (
+  let topBottomAndShoesScreenPart = (
     <View>
       {getTitleInput()}
       {getPhotoPickerButton()}
@@ -461,21 +556,49 @@ export const CreateScreen = ({ navigation }) => {
       <View style={{paddingTop: 80}} />    
     </View>
   )
+  // Верхняя одежда
+  let outerwearScreenPart = (
+    <View>
+      {getTitleInput()}
+      {getPhotoPickerButton()}
+      {getSeasonSelectionBlock()}
+      {getOutwearSizesPack()}
+      {getPriceBlock()}
+      {getCareSignsBlock()}
+      {getNotesBlock()}
+      {getSaveButton()}
+      <View style={{paddingTop: 80}} />    
+    </View>
+  )
+  // Аксессуары
+  let accessoriesScreenPart = (
+    <View>
+      {getTitleInput()}
+      {getPhotoPickerButton()}
+      {getSeasonSelectionBlock()}
+      {getAccessoriesSizesPack()}
+      {getPriceBlock()}
+      {getCareSignsBlock()}
+      {getNotesBlock()}
+      {getSaveButton()}
+      <View style={{paddingTop: 80}} />    
+    </View>
+  )
 
   const renderPartChoice = () => {
     switch(category) {     
       case "top":
-        return topBottomAndShoes;
+        return topBottomAndShoesScreenPart;
       case "bottom":
-        return topBottomAndShoes;
+        return topBottomAndShoesScreenPart;
       case "underwear":
         return underwearScreenPart;
       case "outerwear":
-        return <AppText>outerwear</AppText>;
+        return outerwearScreenPart;
       case "accessories":
-        return <AppText>accessories</AppText>;
+        return accessoriesScreenPart;
       case "footwear":
-        return topBottomAndShoes;
+        return topBottomAndShoesScreenPart;
       default:
         return clearScreenPart
     }
@@ -565,7 +688,6 @@ const styles = StyleSheet.create({
     borderColor: APP_COLORS.BROWN,
     marginBottom: 16
   },
-  // underwear
   underwearContainer: {
     marginVertical: 10,
     borderColor: APP_COLORS.ORANGE,
@@ -577,7 +699,10 @@ const styles = StyleSheet.create({
     padding: 6,
   },
   sizeBlock: {
-    width: 64,        
+    width: 64,
+  },
+  sizeBlockForTwoElements: {
+    width: '30%',
   },
   sizeText: {
       color: APP_COLORS.BROWN,
