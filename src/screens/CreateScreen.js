@@ -442,7 +442,7 @@ export const CreateScreen = ({ navigation }) => {
             </View>        
         </View>
         <View style={styles.underwearLineBlock}>
-            <View style={styles.sizeBlock}>
+            <View style={styles.sizeBlockForTwoElements}>
               <View style={styles.countryCodeBlock} >
                 <AppText style={styles.countryCodeTitle}>US</AppText>
               </View>
@@ -456,7 +456,7 @@ export const CreateScreen = ({ navigation }) => {
                 onChangeText={setUs}
               />
             </View> 
-            <View style={styles.sizeBlock}>
+            <View style={styles.sizeBlockForTwoElements}>
               <View style={styles.countryCodeBlock} >
                 <AppText style={styles.countryCodeTitle}>INT</AppText>
               </View>
