@@ -524,9 +524,7 @@ export const CreateScreen = ({ navigation }) => {
       careSignsString = caresigns.split(careSignId).join('');
       setCaresigns(careSignsString)
     }
-  }
-
-  let clearScreenPart = (<View style={{height: 500}} />)  
+  }    
 
   // Нижнее белье
   let underwearScreenPart = (
@@ -585,23 +583,25 @@ export const CreateScreen = ({ navigation }) => {
     </View>
   )
 
-  const renderPartChoice = () => {
-    switch(category) {     
-      case "top":
-        return topBottomAndShoesScreenPart;
-      case "bottom":
-        return topBottomAndShoesScreenPart;
-      case "underwear":
-        return underwearScreenPart;
-      case "outerwear":
-        return outerwearScreenPart;
-      case "accessories":
-        return accessoriesScreenPart;
-      case "footwear":
-        return topBottomAndShoesScreenPart;
-      default:
-        return clearScreenPart
-    }
+  let clearScreenPart = (<View style={{height: 500}} />)
+
+  const renderPartChoice = category => {
+      switch(category) {     
+        case "top":
+          return topBottomAndShoesScreenPart;
+        case "bottom":
+          return topBottomAndShoesScreenPart;
+        case "underwear":
+          return underwearScreenPart;
+        case "outerwear":
+          return outerwearScreenPart;
+        case "accessories":
+          return accessoriesScreenPart;
+        case "footwear":
+          return topBottomAndShoesScreenPart;
+        default:
+          return clearScreenPart
+      }
   }
 
   return (    
@@ -627,7 +627,7 @@ export const CreateScreen = ({ navigation }) => {
             placeholder="Выберите категорию одежды"
             onChangeItem={item => defineRenderPart(item.value)}
           />
-          {renderPartChoice()}
+          {renderPartChoice(category)}
         </View>
       </TouchableWithoutFeedback>
     </ScrollView>

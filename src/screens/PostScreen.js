@@ -99,6 +99,7 @@ export const PostScreen = ({ navigation }) => {
 
     const checkingStringForEmptiness = (string) => {
         let thisString
+        if (string == null) {return <AntDesign style={styles.sizeText} name="smileo" size={20} color={APP_COLORS.BROWN} />} 
         string.trim() == ''
             ? thisString = <AntDesign style={styles.sizeText} name="smileo" size={20} color={APP_COLORS.BROWN} />
             : thisString = <AppText style={styles.sizeText}>{string}</AppText>
@@ -152,8 +153,8 @@ export const PostScreen = ({ navigation }) => {
         return null
     }
 
-    return (
-        <ScrollView style={styles.wrapper}>
+    const getPictureBlock = () => {
+        return (
             <ImageBackground style={styles.image} source={{uri: post.img}}>
                 <View style={styles.headerTextWrap}>
                     <View style={{flexDirection: 'row'}}>
@@ -163,7 +164,62 @@ export const PostScreen = ({ navigation }) => {
                     <AppText style={styles.upText}>{new Date(post.date).toLocaleDateString()}</AppText>
                 </View>
             </ImageBackground>
+        )
+    }
 
+    const getPriceBlock = () => {
+        return (
+            <View>
+                <View style={{flexDirection: 'row'}}>
+                    <AppText style={styles.titles}>Цена</AppText>
+                 </View>            
+                <View style={styles.priceCurrencyBlock}>                
+                    <AppText style={styles.priceText}>{checkingPriceForEmptiness(post.price)}</AppText>
+                    <AppText style={styles.currencyText}>{currencyHandler()}</AppText>
+                </View>           
+            </View>
+        )
+    }
+
+    const getCareSignsBlock = () => {
+        return (
+            <View>
+                <View style={{flexDirection: 'row'}}>
+                    <AppText style={styles.titles}>Знаки по уходу</AppText>                    
+                </View>
+                <View style={{padding: 10, display: 'flex', flexWrap: 'wrap', flexDirection: 'row'}}>
+                    {getCareSignPicture()}
+                </View>
+            </View>
+        )
+    }
+
+    const getNotesBlock = () => {
+        return (
+            <View>
+                <View style={{flexDirection: 'row'}}>
+                    <AppText style={styles.titles}>Заметки</AppText>
+                </View>                
+                <AppText style={styles.notesText}>{checkingNotesForEmptiness(post.notes)}</AppText>               
+            </View>
+        )
+    }
+
+    const getButtonsBlock = () => {
+        return (
+            <View style={styles.buttonsBlock}>
+                <AppButton>
+                    Изменить
+                </AppButton>
+                <AppButton onPress={removeHandler}>
+                    Удалить
+                </AppButton>
+            </View>
+        )
+    }
+
+    const getUnderwearSizesBlock = () => {
+        return (
             <View style={styles.underwearContainer}>
                 <View style={{flexDirection: 'row'}}>
                     <AppText style={styles.titles}>Размеры</AppText>
@@ -210,41 +266,181 @@ export const PostScreen = ({ navigation }) => {
                     </View>  
                 </View>
             </View>
+        )
+    }
 
-            <View>
+    const getTopBottomAndShoesSizesBlock = () => {
+        return (
+            <View style={styles.underwearContainer}>
                 <View style={{flexDirection: 'row'}}>
-                    <AppText style={styles.titles}>Цена</AppText>
-                 </View>            
-                <View style={styles.priceCurrencyBlock}>                
-                    <AppText style={styles.priceText}>{checkingPriceForEmptiness(post.price)}</AppText>
-                    <AppText style={styles.currencyText}>{currencyHandler()}</AppText>
-                </View>           
-            </View>
-
-            <View>
-                <View style={{flexDirection: 'row'}}>
-                    <AppText style={styles.titles}>Знаки по уходу</AppText>                    
+                    <AppText style={styles.titles}>Размеры</AppText>
                 </View>
-                <View style={{padding: 10, display: 'flex', flexWrap: 'wrap', flexDirection: 'row'}}>
-                    {getCareSignPicture()}
+                
+                <View style={styles.underwearLineBlock}>
+                    <View style={styles.sizeBlock}>
+                    <View style={styles.countryCodeBlock} >
+                        <AppText style={styles.countryCodeTitle}>US</AppText>
+                    </View>
+                    {checkingStringForEmptiness(post.us)}
+                    </View> 
+                    <View style={styles.sizeBlock}>
+                    <View style={styles.countryCodeBlock} >
+                        <AppText style={styles.countryCodeTitle}>UK</AppText>
+                    </View>
+                    {checkingStringForEmptiness(post.uk)}
+                    </View>
+                    <View style={styles.sizeBlock}>
+                    <View style={styles.countryCodeBlock} >
+                        <AppText style={styles.countryCodeTitle}>FR</AppText>
+                    </View>
+                    {checkingStringForEmptiness(post.fr)}
+                    </View>
+                </View> 
+                <View style={styles.underwearLineBlock}>
+                    <View style={styles.sizeBlock}>
+                    <View style={styles.countryCodeBlock} >
+                        <AppText style={styles.countryCodeTitle}>INT</AppText>
+                    </View>
+                    {checkingStringForEmptiness(post.universalSize)}
+                    </View>
+                    <View style={styles.sizeBlock}>
+                    <View style={styles.countryCodeBlock} >
+                        <AppText style={styles.countryCodeTitle}>JP</AppText>
+                    </View>
+                    {checkingStringForEmptiness(post.jp)}
+                    </View>
+                    <View style={styles.sizeBlock}>
+                    <View style={styles.countryCodeBlock} >
+                        <AppText style={styles.countryCodeTitle}>CHN</AppText>
+                    </View>
+                    {checkingStringForEmptiness(post.chn)}
+                    </View>  
                 </View>
             </View>
+        )
+    }
 
-            <View>
+    const getOutwearSizesBlock = () => {
+        return (
+            <View style={styles.underwearContainer}>
                 <View style={{flexDirection: 'row'}}>
-                    <AppText style={styles.titles}>Заметки</AppText>
-                </View>                
-                <AppText style={styles.notesText}>{checkingNotesForEmptiness(post.notes)}</AppText>               
+                    <AppText style={styles.titles}>Размеры</AppText>
+                </View>
+                <View style={styles.underwearLineBlock}>
+                    <View style={styles.sizeBlockForTwoElements}>
+                        <View style={styles.countryCodeBlock} >
+                            <AppText style={styles.countryCodeTitle}>RU</AppText>
+                        </View>
+                        {checkingStringForEmptiness(post.ru)}
+                    </View>
+                </View> 
+                <View style={styles.underwearLineBlock}>
+                    <View style={styles.sizeBlockForTwoElements}>
+                        <View style={styles.countryCodeBlock} >
+                            <AppText style={styles.countryCodeTitle}>US</AppText>
+                        </View>
+                        {checkingStringForEmptiness(post.us)}
+                    </View>
+                    <View style={styles.sizeBlockForTwoElements}>
+                        <View style={styles.countryCodeBlock} >
+                            <AppText style={styles.countryCodeTitle}>INT</AppText>
+                        </View>
+                        {checkingStringForEmptiness(post.universalSize)}
+                    </View> 
+                </View>
             </View>
+        )
+    }
 
-            <View style={styles.buttonsBlock}>
-                <AppButton>
-                    Изменить
-                </AppButton>
-                <AppButton onPress={removeHandler}>
-                    Удалить
-                </AppButton>
+    const getAccessoriesSizesBlock = () => {
+        return (
+            <View style={styles.underwearContainer}>
+                <View style={{flexDirection: 'row'}}>
+                    <AppText style={styles.titles}>Размеры</AppText>
+                </View>
+                <View style={styles.underwearLineBlock}>
+                    <View style={styles.sizeBlockForTwoElements}>
+                        <View style={styles.countryCodeBlock} >
+                            <AppText style={styles.countryCodeTitle}>RU</AppText>
+                        </View>
+                        {checkingStringForEmptiness(post.ru)}
+                    </View>
+                    <View style={styles.sizeBlockForTwoElements}>
+                        <View style={styles.countryCodeBlock} >
+                            <AppText style={styles.countryCodeTitle}>INT</AppText>
+                        </View>
+                        {checkingStringForEmptiness(post.universalSize)}
+                    </View>
+                </View>
             </View>
+        )
+    }
+
+    let topBottomAndShoesScreenPart = (
+        <View>
+            {getPictureBlock()}
+            {getTopBottomAndShoesSizesBlock()}
+            {getPriceBlock()}
+            {getCareSignsBlock()}
+            {getNotesBlock()}
+            {getButtonsBlock()}
+        </View>    
+    )
+
+    let underwearScreenPart = (
+        <View>
+            {getPictureBlock()}
+            {getUnderwearSizesBlock()}
+            {getPriceBlock()}
+            {getCareSignsBlock()}
+            {getNotesBlock()}
+            {getButtonsBlock()}
+        </View>
+    )
+    let outerwearScreenPart = (
+        <View>
+            {getPictureBlock()}
+            {getOutwearSizesBlock()}
+            {getPriceBlock()}
+            {getCareSignsBlock()}
+            {getNotesBlock()}
+            {getButtonsBlock()}
+        </View>    
+    )
+    let accessoriesScreenPart = (
+        <View>
+            {getPictureBlock()}
+            {getAccessoriesSizesBlock()}
+            {getPriceBlock()}
+            {getCareSignsBlock()}
+            {getNotesBlock()}
+            {getButtonsBlock()}
+        </View>
+    )
+    let clearScreenPart =(<View></View>)
+
+    const renderPartChoice = category => {
+        switch(category) {     
+          case "top":
+            return topBottomAndShoesScreenPart;
+          case "bottom":
+            return topBottomAndShoesScreenPart;
+          case "underwear":
+            return underwearScreenPart;
+          case "outerwear":
+            return outerwearScreenPart;
+          case "accessories":
+            return accessoriesScreenPart;
+          case "footwear":
+            return topBottomAndShoesScreenPart;
+          default:
+            return clearScreenPart
+        }
+    }
+
+    return (
+        <ScrollView style={styles.wrapper}>
+            {renderPartChoice(post.category)}
             <View style={{paddingTop: 80}} />
         </ScrollView>
     )
@@ -345,7 +541,6 @@ const styles = StyleSheet.create({
         paddingBottom: 50,
         color: APP_COLORS.BROWN,
     },
-    // НИЖНЕЕ БЕЛЬЕ И КУПАЛЬНИКИ
     underwearContainer: {
         marginVertical: 10,
         borderColor: APP_COLORS.ORANGE,
@@ -392,5 +587,8 @@ const styles = StyleSheet.create({
     priceBlock: {
         flexDirection: 'row', 
         justifyContent: 'space-around',        
-    }
+    },
+    sizeBlockForTwoElements: {
+        width: '30%',
+    },
 })
