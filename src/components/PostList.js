@@ -37,6 +37,7 @@ const styles = StyleSheet.create({
         padding: 10,
         fontSize: 18,
         color: APP_COLORS.BROWN,
-        fontWeight: '700'
+        fontWeight: '700',
+        marginBottom: 10
     },
 })
