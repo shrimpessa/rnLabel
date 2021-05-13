@@ -185,9 +185,6 @@ export const PostScreen = ({ navigation }) => {
     const getButtonsBlock = () => {
         return (
             <View style={styles.buttonsBlock}>
-                <AppButton>
-                    Изменить
-                </AppButton>
                 <AppButton onPress={removeHandler}>
                     Удалить
                 </AppButton>
@@ -482,8 +479,7 @@ const styles = StyleSheet.create({
         paddingTop: '1%'
     },
     buttonsBlock: {
-        flexDirection: 'row',
-        justifyContent: 'space-around'
+        paddingHorizontal: 10
     },
     // ЦЕНА И ВАЛЮТА
     priceCurrencyBlock: {
