@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "rnSelfPosts",
-    "slug": "rnSelfPosts",
+    "name": "Моя одежда",
+    "slug": "rnLabels",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
