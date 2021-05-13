@@ -18,7 +18,6 @@ import { AppHeaderIcon } from '../components/ui/AppHeaderIcon';
 import { removePost, toogleBooked } from '../store/actions/postActions';
 import { loadCareSigns } from '../store/actions/careSignsAction';
 import { seasonHandler } from '../components/seasonHandler'
-import { parseCareSignsString } from '../components/parseCareSignsString'
 import { getCareSignPicture } from '../components/getCareSignPicture';
 
 export const PostScreen = ({ navigation }) => {
@@ -27,7 +26,7 @@ export const PostScreen = ({ navigation }) => {
 
     useEffect(() => {
         dispatch(loadCareSigns())
-      }, [dispatch])
+    }, [dispatch])
 
     const allCareSigns = useSelector(state => state.careSigns.allCareSigns)
 
