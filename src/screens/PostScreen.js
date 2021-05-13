@@ -99,7 +99,6 @@ export const PostScreen = ({ navigation }) => {
 
     const checkingStringForEmptiness = (string) => {
         let thisString
-        if (string == null) {return <AntDesign style={styles.sizeText} name="smileo" size={20} color={APP_COLORS.BROWN} />} 
         string.trim() == ''
             ? thisString = <AntDesign style={styles.sizeText} name="smileo" size={20} color={APP_COLORS.BROWN} />
             : thisString = <AppText style={styles.sizeText}>{string}</AppText>

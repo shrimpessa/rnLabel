@@ -74,14 +74,17 @@ export const CreateScreen = ({ navigation }) => {
       price: price,
       currency: currency,
       season: season,
-
-      it: it,
-      eu: eu,
-      es: es,
       fr: fr,
       uk: uk,
       usa: usa,
-      
+      us: us,
+      jp: jp,
+      chn: chn,
+      ru: ru,
+      universalSize: universalSize,
+      it: it,
+      eu: eu,
+      es: es,  
       caresigns: caresigns,
       notes: notes,
     }
