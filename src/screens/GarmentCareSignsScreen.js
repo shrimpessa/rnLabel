@@ -14,7 +14,7 @@ export const GarmentCareSignsScreen = () => {
 }
 
 GarmentCareSignsScreen.navigationOptions = ({ navigation }) => ({
-    headerTitle: 'О приложении',
+    headerTitle: 'Знаки по уходу',
     headerLeft: () => (
       <HeaderButtons HeaderButtonComponent={AppHeaderIcon}>
         <Item

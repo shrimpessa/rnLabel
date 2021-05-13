@@ -18,10 +18,10 @@ export const BookedScreen = ({ navigation }) => {
     const bookedPosts = useSelector(state => state.post.bookedPosts)
 
     return (
-      <PostList 
+      <PostList    
         data={bookedPosts} 
         onOpen={openPostHandler} 
-      />
+      /> 
     )
 }
 

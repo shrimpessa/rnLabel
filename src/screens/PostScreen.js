@@ -18,6 +18,8 @@ import { AppHeaderIcon } from '../components/ui/AppHeaderIcon';
 import { removePost, toogleBooked } from '../store/actions/postActions';
 import { loadCareSigns } from '../store/actions/careSignsAction';
 import { seasonHandler } from '../components/seasonHandler'
+import { parseCareSignsString } from '../components/parseCareSignsString'
+import { getCareSignPicture } from '../components/getCareSignPicture';
 
 export const PostScreen = ({ navigation }) => {
 
@@ -124,29 +126,6 @@ export const PostScreen = ({ navigation }) => {
         return thisNote
     }
 
-    const parseCareSignsString = () => {
-        let array = post.caresigns.split('#')
-        let uniqueArray = array.filter(function(item, pos) {
-            return array.indexOf(item) == pos
-        })
-        return uniqueArray
-    }
-
-    const getCareSignPicture = () => {
-        let arrayOfCareSignsIDs = parseCareSignsString()
-        let pictureSet = []
-        allCareSigns.map(item => {
-            arrayOfCareSignsIDs.map(s =>
-                { if (item.id == s) {pictureSet.push(item.img)} }
-            )
-        })        
-        return (
-            pictureSet.map(i => {
-                return <ImageBackground key={i + 10} style={{width: 60, height: 60}} source={{ uri: i }} />
-            })
-        )
-    }
-
     // действия при удалении поста
     if (!post) {
         return null
@@ -187,7 +166,7 @@ export const PostScreen = ({ navigation }) => {
                     <AppText style={styles.titles}>Знаки по уходу</AppText>                    
                 </View>
                 <View style={{padding: 10, display: 'flex', flexWrap: 'wrap', flexDirection: 'row'}}>
-                    {getCareSignPicture()}
+                    {getCareSignPicture(post.caresigns, allCareSigns)}
                 </View>
             </View>
         )
